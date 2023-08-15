@@ -31,15 +31,18 @@ def compute_perplexity_data(model, data_path, indices=None):
 
     reader = lm_dataformat.Reader(data_path)
     for i, doc in enumerate(tqdm_lib.tqdm(reader.stream_data())):
-        if indices is not None and i not in indices:
-            continue
-        output = model.get_perplexity_data(doc)
-        if not output:
-            continue
-        overall_output["all_logprobs"].append(output["logprobs"])
-        overall_output["all_positions"].append(output["positions"])
-        overall_output["aggregate_length"] += output["length"]
-        overall_output["aggregate_utf8_length"] += output["utf8_length"]
+        if i < 500: # testing on just small bit!!!!!!!!
+            if indices is not None and i not in indices:
+                continue
+            output = model.get_perplexity_data(doc)
+            if not output:
+                continue
+            overall_output["all_logprobs"].append(output["logprobs"])
+            overall_output["all_positions"].append(output["positions"])
+            overall_output["aggregate_length"] += output["length"]
+            overall_output["aggregate_utf8_length"] += output["utf8_length"]
+        else:
+            break
 
     return overall_output
 

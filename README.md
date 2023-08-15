@@ -5,7 +5,7 @@
 python scripts/calculation_data.py \
     --model_config_path preset_configs/pythia70m-sft.json \
     --data_path data/val.jsonl.zst \
-    --calculation_output_path outputs/pythia70m-sft/calculation_data.p
+    --calculation_output_path outputs/pythia70m-sft_calculation_data.p
 ```
 
 # Use intermediate outputs to compute perplexity

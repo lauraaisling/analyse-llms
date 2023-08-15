@@ -21,7 +21,7 @@ class LM:
 
 class PYTHIA(LM):
 
-    def __init__(self, model_name, device="cuda:0", context_len=512, max_seq_len=1024,verbose=True):  
+    def __init__(self, model_name, device="cuda:0", context_len=512, max_seq_len=1024,verbose=False):  
         self.model_name = model_name
         self.device = torch.device(device)
         self.context_len = context_len
@@ -55,6 +55,7 @@ class PYTHIA(LM):
             )
             all_logprobs.append(block_output["logprobs"])
             all_positions.append(block_output["positions"])
+            # batch_mean_probs TODO
 
         if not all_logprobs:
             return None
@@ -76,6 +77,10 @@ class PYTHIA(LM):
         pred_tokens = torch.tensor(pred_tokens).long().to(self.device)
         # print(input_tokens)
         output = self.model(torch.unsqueeze(input_tokens,0), return_dict=True)
+        # softmax to get probability distribution
+        sm = torch.nn.Softmax(dim=1)
+        # probs = sm(output.logits)
+        batch_mean_probs = sm(output["logits"]).mean(1)
         loss_fct = nn.CrossEntropyLoss(reduction="none")
         neg_logprobs = loss_fct(
             output.logits[0,-len(pred_tokens):],
@@ -92,6 +97,7 @@ class PYTHIA(LM):
         return {
             "logprobs": - neg_logprobs,
             "positions": positions,
+            "batch_mean_probs": batch_mean_probs,
         }
 
     @classmethod

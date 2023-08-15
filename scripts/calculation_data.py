@@ -3,15 +3,17 @@ import torch
 from tqdm import auto as tqdm_lib
 
 import lm_dataformat
-import scripts.models as models
-import scripts.utils as utils
+# import scripts.models as models
+# import scripts.utils as utils
+import models
+import utils
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_config_path', required=True)
     parser.add_argument('--data_path', required=True)
-    parser.add_argument('--output_path', required=True)
+    parser.add_argument('--calculation_output_path', required=True)
     parser.add_argument('--max_docs', type=int, default=None)
     parser.add_argument('--doc_indices_path', type=str, default=None)
     return parser.parse_args()
@@ -58,7 +60,7 @@ def main():
         data_path=args.data_path,
         indices=indices,
     )
-    torch.save(perplexity_data, args.output_path)
+    torch.save(perplexity_data, args.calculation_output_path)
 
 
 if __name__ == "__main__":

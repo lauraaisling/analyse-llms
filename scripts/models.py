@@ -7,8 +7,8 @@ import torch
 import torch.nn as nn
 import transformers
 
-import scripts.utils as utils
-
+# import scripts.utils as utils
+import utils
 
 class LM:
     def get_perplexity_data(self, text) -> Optional[dict]:
@@ -21,7 +21,7 @@ class LM:
 
 class PYTHIA(LM):
 
-    def __init__(self, model_name, device="cuda:0", context_len=512, max_seq_len=1024, verbose=False):
+    def __init__(self, model_name, device="cuda:0", context_len=512, max_seq_len=1024,verbose=True):  
         self.model_name = model_name
         self.device = torch.device(device)
         self.context_len = context_len
@@ -70,13 +70,15 @@ class PYTHIA(LM):
             "utf8_length": len(text.encode('utf-8')),
         }
 
-    def get_token_logprobs(self, input_tokens, pred_tokens):
+    def get_token_logprobs(self, input_tokens, pred_tokens, 
+    ):
         input_tokens = torch.tensor(input_tokens).long().to(self.device)
         pred_tokens = torch.tensor(pred_tokens).long().to(self.device)
-        output = self.model(input_tokens, return_dict=True)
+        # print(input_tokens)
+        output = self.model(torch.unsqueeze(input_tokens,0), return_dict=True)
         loss_fct = nn.CrossEntropyLoss(reduction="none")
         neg_logprobs = loss_fct(
-            output.logits[-len(pred_tokens):],
+            output.logits[0,-len(pred_tokens):],
             pred_tokens,
         ).detach().cpu().numpy()
         if self.verbose:
@@ -100,10 +102,8 @@ class PYTHIA(LM):
 def create_model(json_path):
     config = utils.read_json(json_path)
     model_type = config.pop("model_type")
-    if model_type == "gpt3":
-        model = GPT3LM.create_from_config(config)
-    elif model_type == "gpt2":
-        model = GPT2LM.create_from_config(config)
+    if model_type == "pythia":
+        model = PYTHIA.create_from_config(config)
     else:
         raise KeyError(model_type)
     return model

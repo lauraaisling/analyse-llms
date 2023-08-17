@@ -2,7 +2,7 @@ import argparse
 import torch
 from tqdm import auto as tqdm_lib
 import numpy as np
-
+# h
 import lm_dataformat
 import pythia_funcs 
 import utils
@@ -10,11 +10,17 @@ import utils
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_config_path', required=True)
-    parser.add_argument('--data_path', required=True)
-    parser.add_argument('--calculation_output_path', required=True)
-    parser.add_argument('--calc_probs', default=False, type=lambda x: (str(x).lower() in ['true', '1', 'yes'])) ### avg_probs_doc 
-    parser.add_argument('--max_docs', type=int, default=None)
+    parser.add_argument('--model_config_path', required=True,
+                        help='Path to where model config is stored')
+    parser.add_argument('--data_path', required=True,
+                        help='Path to where subset of the pile is stored')
+    parser.add_argument('--calculation_output_path', required=True,
+                        help='Path for where to save results')
+    parser.add_argument('--calc_probs', default=False, 
+                        type=lambda x: (str(x).lower() in ['true', '1', 'yes']),
+                        help='Save average probabilities of all tokens - Yes/No') 
+    parser.add_argument('--max_docs', type=int, default=None,
+                        help='Number of docs if only using subset of dataser from --data_path argument')
     parser.add_argument('--doc_indices_path', type=str, default=None)
     return parser.parse_args()
 

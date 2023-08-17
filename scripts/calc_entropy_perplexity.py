@@ -6,9 +6,11 @@ import torch
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--computation_data_path', required=True)
+    parser.add_argument('--computation_data_path', required=True,
+                        help='Path for where results from previous step were saved')
     parser.add_argument('--utf8_conversion_scalar', default=None, type=float)
-    parser.add_argument('--output_path', default=None)
+    parser.add_argument('--output_path', default=None,
+                        help='Path for where to save final results')
     return parser.parse_args()
 
 

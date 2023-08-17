@@ -1,3 +1,5 @@
+# cripts/utils.py This script is adapted from https://github.com/EleutherAI/lm_perplexity/tree/main
+
 import contextlib
 import json
 import time

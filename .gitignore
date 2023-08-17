@@ -4,4 +4,4 @@ scripts/.ipynb_checkpoints
 scripts/RW*.*
 notebooks/RW*.*
 notebooks/.ipynb_checkpoints/*
-scripts/__pycache__/*
+scripts/__pycache__/

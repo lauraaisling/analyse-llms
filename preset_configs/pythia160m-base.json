@@ -1,0 +1,6 @@
+{
+    "model_type": "pythia",
+    "model_name": "EleutherAI/pythia-160m",
+    "context_len": 1,
+    "device": "cuda:0"
+  }

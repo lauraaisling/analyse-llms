@@ -61,7 +61,7 @@ def compute_data(model, data_path, calc_probs, indices=None):
                 temp_output["block_mean_probs"] = []
         else:
             break
-
+        print("num docs - i: ", i)
     return overall_output
 
 

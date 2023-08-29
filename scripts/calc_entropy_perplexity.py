@@ -6,7 +6,7 @@ import torch
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--computation_data_path', required=True,
+    parser.add_argument('--calculation_output_path', required=True,
                         help='Path for where results from previous step were saved')
     parser.add_argument('--utf8_conversion_scalar', default=None, type=float)
     parser.add_argument('--output_path', default=None,
@@ -16,7 +16,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    perplexity_data = torch.load(args.computation_data_path)
+    perplexity_data = torch.load(args.calculation_output_path)
     aggregate_logprobs = np.concatenate(perplexity_data["all_logprobs"])
     perplexity = np.exp(-aggregate_logprobs.mean())
     result = {

@@ -5,3 +5,4 @@ scripts/RW*.*
 notebooks/RW*.*
 notebooks/.ipynb_checkpoints/*
 scripts/__pycache__/
+RW/*

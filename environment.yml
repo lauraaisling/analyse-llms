@@ -1,4 +1,0 @@
-name: analyse-llms
-channels:
-  - defaults
-prefix: /home/laura/anaconda3/envs/analyse-llms

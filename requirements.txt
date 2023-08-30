@@ -54,7 +54,7 @@ fsspec==2023.5.0
 ftfy==6.1.1
 fused-kernels==0.0.1
 gitdb==4.0.10
-GitPython==3.1.31
+GitPython==3.1.32
 gpustat==1.1
 hjson==3.1.0
 huggingface-hub==0.14.1

@@ -16,6 +16,9 @@ def parse_args():
                         help='Path to where subset of the pile is stored')
     parser.add_argument('--calculation_output_path', required=True,
                         help='Path for where to save results')
+    parser.add_argument('--calc_confidence', default=False, 
+                        type=lambda x: (str(x).lower() in ['true', '1', 'yes']),
+                        help='Save probability of next token prediction - Yes/No') 
     parser.add_argument('--calc_probs', default=False, 
                         type=lambda x: (str(x).lower() in ['true', '1', 'yes']),
                         help='Save average probabilities of all tokens - Yes/No') 
@@ -25,7 +28,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def compute_data(model, data_path, calc_probs, indices=None):
+def compute_data(model, data_path, calc_confidence, calc_probs, indices=None):
     # For expedience, we're going to assume everything fits in memory for now
     # Also for expedience we're just going to save lists of arrays
     overall_output = {
@@ -33,6 +36,8 @@ def compute_data(model, data_path, calc_probs, indices=None):
         "all_positions": [],
         # "block_mean_probs": [],
         "mean_probs": [],
+        "next_pred": [],
+        "next_pred_confidence": [],
         "aggregate_length": 0,
         "aggregate_utf8_length": 0.
     }
@@ -42,26 +47,30 @@ def compute_data(model, data_path, calc_probs, indices=None):
 
     reader = lm_dataformat.Reader(data_path)
     for i, doc in enumerate(tqdm_lib.tqdm(reader.stream_data())):
+        ####################################
         # testing on just this chunk (~1/3 of Pile)! 
-        if i < 50000: 
-            if indices is not None and i not in indices:
-                continue
-            output = model.get_compute_data(doc, calc_probs) ### 
-            if not output:
-                continue
-            overall_output["all_logprobs"].append(output["logprobs"])
-            overall_output["all_positions"].append(output["positions"])
-            overall_output["aggregate_length"] += output["length"]
-            overall_output["aggregate_utf8_length"] += output["utf8_length"]
-            temp_output["block_mean_probs"].append(output["block_mean_probs"])
+        # if i < 50000: 
+        if indices is not None and i not in indices:
+            continue
+        output = model.get_compute_data(text=doc, calc_confidence=calc_confidence, calc_probs=calc_probs) 
+        if not output:
+            continue
+        overall_output["all_logprobs"].append(output["logprobs"])
+        overall_output["all_positions"].append(output["positions"])
+        overall_output["next_pred"].append(output["next_pred"])
+        overall_output["next_pred_confidence"].append(output["next_pred_confidence"])#################################
+        overall_output["aggregate_length"] += output["length"]
+        overall_output["aggregate_utf8_length"] += output["utf8_length"]
+        temp_output["block_mean_probs"].append(output["block_mean_probs"])
 
-            if i % 500==0: 
-                # mean_probs = np.concatenate(overall_output["block_mean_probs"])
-                overall_output["mean_probs"].append(np.concatenate(temp_output["block_mean_probs"])) 
-                temp_output["block_mean_probs"] = []
-        else:
-            break
+        if i % 500==0: 
+            # mean_probs = np.concatenate(overall_output["block_mean_probs"])
+            overall_output["mean_probs"].append(np.concatenate(temp_output["block_mean_probs"])) 
+            temp_output["block_mean_probs"] = []
+        # else:
+        #     break
         print("num docs - i: ", i)
+        #########################################
     return overall_output
 
 
@@ -80,6 +89,7 @@ def main():
     perplexity_data = compute_data(
         model=model,
         data_path=args.data_path,
+        calc_confidence=args.calc_confidence, #
         calc_probs=args.calc_probs, # 
         indices=indices,
     )

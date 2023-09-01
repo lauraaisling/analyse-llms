@@ -1,0 +1,6 @@
+{
+    "model_type": "pythia",
+    "model_name": "lomahony/eleuther-pythia410m-hh-dpo",
+    "context_len": 1,
+    "device": "cuda:0"
+  }

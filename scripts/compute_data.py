@@ -2,7 +2,6 @@ import argparse
 import torch
 from tqdm import auto as tqdm_lib
 import numpy as np
-# h
 import lm_dataformat
 import pythia_funcs 
 import utils

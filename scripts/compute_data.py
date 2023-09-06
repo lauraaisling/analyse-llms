@@ -37,6 +37,7 @@ def compute_data(model, data_path, calc_confidence, calc_probs, indices=None):
         "mean_probs": [],
         "next_pred": [],
         "next_pred_confidence": [],
+        "entropy": [],
         "aggregate_length": 0,
         "aggregate_utf8_length": 0.
     }
@@ -46,9 +47,6 @@ def compute_data(model, data_path, calc_confidence, calc_probs, indices=None):
 
     reader = lm_dataformat.Reader(data_path)
     for i, doc in enumerate(tqdm_lib.tqdm(reader.stream_data())):
-        ####################################
-        # testing on just this chunk (~1/3 of Pile)! 
-        # if i < 50000: 
         if indices is not None and i not in indices:
             continue
         output = model.get_compute_data(text=doc, calc_confidence=calc_confidence, calc_probs=calc_probs) 
@@ -57,7 +55,8 @@ def compute_data(model, data_path, calc_confidence, calc_probs, indices=None):
         overall_output["all_logprobs"].append(output["logprobs"])
         overall_output["all_positions"].append(output["positions"])
         overall_output["next_pred"].append(output["next_pred"])
-        overall_output["next_pred_confidence"].append(output["next_pred_confidence"])#################################
+        overall_output["next_pred_confidence"].append(output["next_pred_confidence"])
+        overall_output["entropy"].append(output["entropy"])
         overall_output["aggregate_length"] += output["length"]
         overall_output["aggregate_utf8_length"] += output["utf8_length"]
         temp_output["block_mean_probs"].append(output["block_mean_probs"])
@@ -66,10 +65,8 @@ def compute_data(model, data_path, calc_confidence, calc_probs, indices=None):
             # mean_probs = np.concatenate(overall_output["block_mean_probs"])
             overall_output["mean_probs"].append(np.concatenate(temp_output["block_mean_probs"])) 
             temp_output["block_mean_probs"] = []
-        # else:
-        #     break
-        print("num docs - i: ", i)
-        #########################################
+
+        print("num docs - i: ", i) #########################################
     return overall_output
 
 
@@ -88,8 +85,8 @@ def main():
     perplexity_data = compute_data(
         model=model,
         data_path=args.data_path,
-        calc_confidence=args.calc_confidence, #
-        calc_probs=args.calc_probs, # 
+        calc_confidence=args.calc_confidence, 
+        calc_probs=args.calc_probs, 
         indices=indices,
     )
     torch.save(perplexity_data, args.calculation_output_path)

@@ -44,6 +44,7 @@ class PYTHIA(LM):
         next_pred = []
         next_pred_confidence = []
         block_mean_probs = []
+        entropy = []
 
         for input_tokens, pred_tokens in rolling_token_windows:
             block_output = self.get_token_logprobs( ###########################################
@@ -57,6 +58,7 @@ class PYTHIA(LM):
             next_pred.append(block_output["next_pred"])
             next_pred_confidence.append(block_output["next_pred_confidence"])
             block_mean_probs.append(block_output["block_mean_probs"])
+            entropy.append(block_output["entropy"])
 
         if not all_logprobs:
             return None
@@ -66,6 +68,7 @@ class PYTHIA(LM):
         block_mean_probs = np.concatenate(block_mean_probs) 
         next_pred = np.concatenate(next_pred) 
         next_pred_confidence = np.concatenate(next_pred_confidence) 
+        entropy = np.concatenate(entropy) 
         assert len(all_logprobs) == len(input_ids)
         return {
             "logprobs": all_logprobs,
@@ -73,6 +76,7 @@ class PYTHIA(LM):
             "next_pred": next_pred,
             "next_pred_confidence": next_pred_confidence,
             "block_mean_probs": block_mean_probs,
+            "entropy": entropy,
             "length": len(all_logprobs),
             "utf8_length": len(text.encode('utf-8')),
         }
@@ -81,15 +85,20 @@ class PYTHIA(LM):
     ):
         input_tokens = torch.tensor(input_tokens).long().to(self.device)
         pred_tokens = torch.tensor(pred_tokens).long().to(self.device)
-        # print(input_tokens)
         output = self.model(torch.unsqueeze(input_tokens,0), return_dict=True)
         # softmax to get probability distribution
         sm = torch.nn.Softmax(dim=-1)
-        output_probs = sm(output["logits"])
-        if calc_probs: ############################
+        # print(f"output.logits.shape: {output.logits.shape}")
+        output_probs = sm(output["logits"]) # [:,-len(pred_tokens):,:] 
+        # print(f"output_probs.shape: {output_probs.shape}")
+        if calc_probs: 
             block_mean_probs = output_probs.mean(1).detach().cpu().numpy() 
         else: 
             block_mean_probs = []
+        
+        # print(output_probs.shape) 
+        entropy = -1 * np.sum( output_probs[0].detach().cpu().numpy() * np.log( output_probs[0].detach().cpu().numpy() ), axis = 1 )
+        # print(f"entropy.shape: {entropy.shape}")
         
         next_pred = np.argmax(output_probs.detach().cpu().numpy(),2) # token model predicts with highest probability
         if calc_confidence: 
@@ -106,6 +115,9 @@ class PYTHIA(LM):
             output.logits[0,-len(pred_tokens):],
             pred_tokens,
         ).detach().cpu().numpy()
+        # print(f"neg_logprobs.shape: {neg_logprobs.shape}")
+        # print(f"next_pred.shape: {next_pred.shape}")
+        # print(f"next_pred_confidence.shape: {next_pred_confidence.shape}")
 
         if self.verbose:
             print("Context:", self.tokenizer.convert_ids_to_tokens(input_tokens))
@@ -119,7 +131,8 @@ class PYTHIA(LM):
             "logprobs": - neg_logprobs,
             "positions": positions,
             "next_pred": next_pred, 
-            "next_pred_confidence": next_pred_confidence, 
+            "next_pred_confidence": next_pred_confidence[0], 
+            "entropy": entropy,
             "block_mean_probs": block_mean_probs,
         }
 

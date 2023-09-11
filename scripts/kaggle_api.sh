@@ -1,9 +1,24 @@
 #!/bin/bash
 
 mkdir -p ~/.kaggle
-touch -p ~/.kaggle/kaggle.json
-api_token = {"username":"lauraomahony999","key":"XXXXX"}
+touch ~/.kaggle/kaggle.json
+
+echo -n "Your kaggle username: "
+read -r username
+
+echo -n "Your api key: "
+read -r api_key
+
+PYCMD=$(cat <<EOF
+import json
+
+api_token = {"username":"$username","key":"$api_key"}
 with open('/home/laura/.kaggle/kaggle.json', 'w') as file:
     json.dump(api_token, file)
 
-!chmod 600 ~/.kaggle/kaggle.json
+EOF
+)
+
+python -c "$PYCMD"
+
+chmod 600 ~/.kaggle/kaggle.json 

@@ -38,3 +38,13 @@ source ~/anaconda3/bin/activate analyse-llms
 # python scripts/calc_entropy_perplexity.py --calculation_output_path outputs/calculation_data_ent_20000-pythia410m-base.p --output_path outputs/perplexity_20000-pythia410m-base.json
 # python scripts/calc_entropy_perplexity.py --calculation_output_path outputs/calculation_data_ent_20000-pythia410m-sft.p --output_path outputs/perplexity_20000-pythia410m-sft.json
 # python scripts/calc_entropy_perplexity.py --calculation_output_path outputs/calculation_data_ent_20000-pythia410m-dpo.p --output_path outputs/perplexity_20000-pythia410m-dpo.json
+
+
+# bash scripts/kaggle_api.sh
+# bash scripts/download_jigsaw_toxic.sh
+
+
+# python scripts/jigsaw_toxic_hs.py --hf_model EleutherAI/pythia-2.8b --n 1000 --layers=[-1,-2,-3,-4,-5]
+# python scripts/jigsaw_toxic_hs.py --hf_model lomahony/eleuther-pythia2.8b-hh-sft --n 1000 --layers=[-1,-2,-3,-4,-5]
+# python scripts/jigsaw_toxic_hs.py --hf_model lomahony/eleuther-pythia2.8b-hh-dpo --n 1000 --layers=[-1,-2,-3,-4,-5]
+

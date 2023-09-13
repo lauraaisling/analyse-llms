@@ -4,7 +4,7 @@ from tqdm import auto as tqdm_lib
 import numpy as np
 import lm_dataformat
 import pythia_funcs 
-import utils
+import entropy_perplexity_utils # utils
 
 
 def parse_args():
@@ -76,7 +76,7 @@ def main():
     model = pythia_funcs.create_model(args.model_config_path)
     if args.doc_indices_path:
         assert args.max_docs is None
-        indices = set(utils.read_json(args.doc_indices_path))
+        indices = set(entropy_perplexity_utils.read_json(args.doc_indices_path)) # utils
     elif args.max_docs:
         assert args.doc_indices_path is None
         indices = set(range(args.max_docs))

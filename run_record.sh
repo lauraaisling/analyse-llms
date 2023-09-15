@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # bash run_record.sh
-source ~/anaconda3/bin/activate analyse-llms
+source ~/anaconda3/bin/activate analyse-llms1
 
 # python scripts/compute_data.py --model_config_path preset_configs/pythia70m-base.json --data_path data/val.jsonl.zst --calculation_output_path outputs/calculation_data_probs_50000-pythia70m-base.p
 # python scripts/compute_data.py --model_config_path preset_configs/pythia70m-sft.json --data_path data/val.jsonl.zst --calculation_output_path outputs/calculation_data_probs_50000-pythia70m-sft.p
@@ -48,3 +48,13 @@ source ~/anaconda3/bin/activate analyse-llms
 # python scripts/jigsaw_toxic_hs.py --hf_model lomahony/eleuther-pythia2.8b-hh-sft --n 1000 --layers=[-1,-2,-3,-4,-5]
 # python scripts/jigsaw_toxic_hs.py --hf_model lomahony/eleuther-pythia2.8b-hh-dpo --n 1000 --layers=[-1,-2,-3,-4,-5]
 
+
+python scripts/jigsaw_toxic_hs.py --hf_model EleutherAI/pythia-2.8b --n 1000 --layers=[-1] # ,-2,-3,-4,-5
+python scripts/jigsaw_toxic_hs.py --hf_model lomahony/eleuther-pythia2.8b-hh-sft --n 1000 --layers=[-1] # ,-2,-3,-4,-5
+# python scripts/jigsaw_toxic_hs.py --hf_model lomahony/eleuther-pythia2.8b-hh-dpo --n 1000 --layers=[-1] # ,-2,-3,-4,-5
+
+python scripts/jigsaw_toxic_hs.py --hf_model EleutherAI/pythia-2.8b --n 1000 --layers=[-2,-3,-4,-5] 
+python scripts/jigsaw_toxic_hs.py --hf_model lomahony/eleuther-pythia2.8b-hh-sft --n 1000 --layers=[-2,-3,-4,-5] 
+python scripts/jigsaw_toxic_hs.py --hf_model lomahony/eleuther-pythia2.8b-hh-dpo --n 1000 --layers=[-2,-3,-4,-5] 
+
+# bash run_record.sh 

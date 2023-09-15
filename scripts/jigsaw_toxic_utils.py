@@ -7,6 +7,9 @@ from tqdm import tqdm
 import numpy as np
 
 
+# torch.use_deterministic_algorithms(True) 
+torch.cuda.manual_seed_all(42)
+
 
 # extract hidden states given a model and text
 def get_decoder_hidden_states(model, tokenizer, input_text, layer=-1):
@@ -64,13 +67,17 @@ def get_hidden_states_many(model, tokenizer, data, n, layer, model_type):
     all_hs = []
 
     # loop
-    for _ in tqdm(range(n)):
+    for i in tqdm(range(n)): # _
         # for simplicity, sample a random example until we find one that's a reasonable length
         # (most examples should be a reasonable length, so this is just to make sure)
-        while True:
-            idx = np.random.randint(len(data))
-            text = data[idx]
-            # the actual formatted input will be longer, so include a bit of a marign
+        # while True:
+            # idx = np.random.randint(len(data))
+            # text = data[idx]
+            # # the actual formatted input will be longer, so include a bit of a marign
+            # if len(tokenizer(text)) < 400:
+            #     break
+        while True: 
+            text = data[i]
             if len(tokenizer(text)) < 400:
                 break
 

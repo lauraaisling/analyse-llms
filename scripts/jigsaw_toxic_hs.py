@@ -59,7 +59,7 @@ def main( hf_model: str, n: int, layers = list, ):
         else:
             non_toxic_hs = jigsaw_toxic_utils.get_hidden_states_many(model, tokenizer, non_toxic, n, layer, model_type="decoder")
             np.save(non_toxic_f, non_toxic_hs)
-            print(f"Calculated {n} toxic and non-toxic hidden states for model {model}, layer {layer} in {time.time() - start_time} seconds")
+            print(f"Calculated {n} toxic and non-toxic hidden states for model {model_name}, layer {layer} in {time.time() - start_time} seconds")
 
 
 if __name__ == "__main__":

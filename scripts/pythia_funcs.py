@@ -5,7 +5,7 @@ import torch.nn as nn
 import transformers
 
 # import scripts.utils as utils
-import utils
+import entropy_perplexity_utils as utils
 
 class LM:
     def get_compute_data(self, text) -> Optional[dict]:
@@ -18,7 +18,7 @@ class LM:
 
 class PYTHIA(LM):
 
-    def __init__(self, model_name, device="cuda:0", context_len=512, max_seq_len=1024,verbose=False):  
+    def __init__(self, model_name, model_type, device="cuda:0", context_len=512, max_seq_len=1024,verbose=False):  
         self.model_name = model_name
         self.device = torch.device(device)
         self.context_len = context_len
@@ -26,8 +26,11 @@ class PYTHIA(LM):
         self.verbose = verbose
 
         torch.set_grad_enabled(False)
-        self.model = transformers.GPTNeoXForCausalLM.from_pretrained(model_name).eval().to(self.device)
-        self.tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
+        if model_type == "pythia": 
+            self.model = transformers.GPTNeoXForCausalLM.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
+        else: 
+            self.model = transformers.AutoModel.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
+        self.tokenizer = transformers.AutoTokenizer.from_pretrained(model_name) ##################################
         self.end_of_text_token_id = self.tokenizer.convert_tokens_to_ids(["<|endoftext|>"])[0]
 
     def get_compute_data(self, text, calc_confidence, calc_probs) -> Optional[dict]: ### 
@@ -143,8 +146,11 @@ class PYTHIA(LM):
 
 def create_model(json_path):
     config = utils.read_json(json_path)
-    model_type = config.pop("model_type")
+    # model_type = config.pop("model_type")
+    model_type = config['model_type']
     if model_type == "pythia":
+        model = PYTHIA.create_from_config(config)
+    elif model_type == "llama":
         model = PYTHIA.create_from_config(config)
     else:
         raise KeyError(model_type)

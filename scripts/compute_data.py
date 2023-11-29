@@ -89,7 +89,9 @@ def main():
         calc_probs=args.calc_probs, 
         indices=indices,
     )
+    print("Done calculations!")
     torch.save(perplexity_data, args.calculation_output_path)
+    print("Saved!")
 
 
 if __name__ == "__main__":

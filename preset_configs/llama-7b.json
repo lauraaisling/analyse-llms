@@ -1,0 +1,6 @@
+{
+    "model_type": "llama",
+    "model_name": "meta-llama/Llama-2-7b-hf",
+    "context_len": 1,
+    "device": "cuda:0"
+  }

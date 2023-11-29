@@ -1,6 +1,6 @@
 {
     "model_type": "pythia",
-    "model_name": "lomahony/pythia-160m-helpful-sft",
+    "model_name": "EleutherAI/pythia-6.9b",
     "context_len": 1,
     "device": "cuda:0"
   }

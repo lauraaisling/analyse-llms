@@ -3,6 +3,7 @@ from typing import Optional
 import torch
 import torch.nn as nn
 import transformers
+from transformers import LlamaForCausalLM, LlamaTokenizer
 
 # import scripts.utils as utils
 import entropy_perplexity_utils as utils
@@ -28,9 +29,10 @@ class PYTHIA(LM):
         torch.set_grad_enabled(False)
         if model_type == "pythia": 
             self.model = transformers.GPTNeoXForCausalLM.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
+            self.tokenizer = transformers.AutoTokenizer.from_pretrained(model_name) ##################################
         else: 
-            self.model = transformers.AutoModel.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
-        self.tokenizer = transformers.AutoTokenizer.from_pretrained(model_name) ##################################
+            self.model = transformers.LlamaForCausalLM.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
+            self.tokenizer = transformers.LlamaTokenizer.from_pretrained(model_name) ################################## GPTNeoXForCausalLM
         self.end_of_text_token_id = self.tokenizer.convert_tokens_to_ids(["<|endoftext|>"])[0]
 
     def get_compute_data(self, text, calc_confidence, calc_probs) -> Optional[dict]: ### 
@@ -89,6 +91,7 @@ class PYTHIA(LM):
         input_tokens = torch.tensor(input_tokens).long().to(self.device)
         pred_tokens = torch.tensor(pred_tokens).long().to(self.device)
         output = self.model(torch.unsqueeze(input_tokens,0), return_dict=True)
+        # print("output pythia_funcs l91: ", output)
         # softmax to get probability distribution
         sm = torch.nn.Softmax(dim=-1)
         # print(f"output.logits.shape: {output.logits.shape}")

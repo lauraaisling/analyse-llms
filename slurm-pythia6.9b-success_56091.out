@@ -1,29 +1,0 @@
-  File "<string>", line 1
-    print(pythia6.9b-base)
-                 ^
-SyntaxError: invalid syntax
-args.calc_probs" True
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:24<00:24, 24.07s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:33<00:00, 15.58s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:33<00:00, 16.85s/it]
-0it [00:00, ?it/s]1it [00:05,  5.05s/it]2it [00:05,  2.62s/it]3it [00:06,  1.66s/it]4it [00:06,  1.07s/it]5it [00:07,  1.12it/s]6it [00:08,  1.07s/it]7it [00:09,  1.09it/s]8it [00:09,  1.38it/s]9it [00:10,  1.38it/s]10it [00:10,  1.44it/s]11it [00:11,  1.66it/s]12it [00:11,  1.70it/s]13it [00:12,  2.00it/s]14it [00:13,  1.41it/s]15it [00:19,  2.32s/it]16it [00:19,  1.74s/it]17it [00:20,  1.38s/it]18it [00:26,  2.77s/it]19it [00:27,  2.17s/it]20it [00:27,  1.56s/it]2843it [00:27, 753.67it/s]6805it [00:27, 2179.83it/s]11643it [00:27, 4481.29it/s]16095it [00:27, 7141.04it/s]20378it [00:27, 10233.98it/s]24447it [00:27, 13588.72it/s]29524it [00:27, 18474.71it/s]33609it [00:28, 21767.35it/s]38508it [00:28, 26808.07it/s]43425it [00:28, 31485.71it/s]47856it [00:28, 34378.67it/s]52331it [00:28, 36939.44it/s]57446it [00:28, 40645.56it/s]62376it [00:28, 42993.93it/s]67104it [00:28, 43079.90it/s]71712it [00:28, 43137.71it/s]76236it [00:29, 43678.94it/s]80754it [00:29, 43318.25it/s]85191it [00:29, 43068.27it/s]89784it [00:29, 43822.91it/s]94221it [00:29, 43565.03it/s]99128it [00:29, 45170.11it/s]103775it [00:29, 45530.03it/s]108351it [00:29, 44727.93it/s]113027it [00:29, 45322.60it/s]117715it [00:29, 45781.63it/s]122304it [00:30, 44107.59it/s]126752it [00:30, 44215.01it/s]131432it [00:30, 44964.49it/s]135940it [00:30, 42812.99it/s]140903it [00:30, 44762.40it/s]145566it [00:30, 45284.98it/s]150783it [00:30, 47300.65it/s]155534it [00:30, 46377.85it/s]160189it [00:30, 46057.46it/s]164807it [00:30, 45019.16it/s]169321it [00:31, 44721.04it/s]174519it [00:31, 46835.07it/s]179908it [00:31, 48811.69it/s]184801it [00:31, 48388.88it/s]189648it [00:31, 46766.64it/s]194564it [00:31, 46955.39it/s]199271it [00:31, 46976.11it/s]204267it [00:31, 47848.17it/s]209298it [00:31, 48519.09it/s]214157it [00:32, 46967.93it/s]214670it [00:32, 6704.85it/s] 
-num docs - i:  0
-num docs - i:  1
-num docs - i:  2
-num docs - i:  3
-num docs - i:  4
-num docs - i:  5
-num docs - i:  6
-num docs - i:  7
-num docs - i:  8
-num docs - i:  9
-num docs - i:  10
-num docs - i:  11
-num docs - i:  12
-num docs - i:  13
-num docs - i:  14
-num docs - i:  15
-num docs - i:  16
-num docs - i:  17
-num docs - i:  18
-num docs - i:  19
-Done calculations!
-Saved!

@@ -1,20 +1,0 @@
-args.calc_probs" True
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:55<00:55, 55.68s/it]Loading checkpoint shards: 100%|██████████| 2/2 [01:13<00:00, 33.28s/it]Loading checkpoint shards: 100%|██████████| 2/2 [01:13<00:00, 36.64s/it]
-Some weights of the model checkpoint at meta-llama/Llama-2-7b-hf were not used when initializing LlamaModel: ['lm_head.weight']
-- This IS expected if you are initializing LlamaModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
-- This IS NOT expected if you are initializing LlamaModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
-0it [00:00, ?it/s]0it [00:01, ?it/s]
-Traceback (most recent call last):
-  File "scripts/compute_data.py", line 98, in <module>
-    main()
-  File "scripts/compute_data.py", line 85, in main
-    perplexity_data = compute_data(
-  File "scripts/compute_data.py", line 52, in compute_data
-    output = model.get_compute_data(text=doc, calc_confidence=calc_confidence, calc_probs=calc_probs) 
-  File "/fsx/home-laura/analyse-llms/scripts/pythia_funcs.py", line 53, in get_compute_data
-    block_output = self.get_token_logprobs( ###########################################
-  File "/fsx/home-laura/analyse-llms/scripts/pythia_funcs.py", line 95, in get_token_logprobs
-    output_probs = sm(output["logits"]) # [:,-len(pred_tokens):,:] 
-  File "/fsx/home-laura/venv-analyse-llms/lib/python3.8/site-packages/transformers/utils/generic.py", line 318, in __getitem__
-    return inner_dict[k]
-KeyError: 'logits'

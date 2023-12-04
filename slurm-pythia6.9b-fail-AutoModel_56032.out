@@ -1,24 +1,0 @@
-  File "<string>", line 1
-    print(pythia6.9b-base)
-                 ^
-SyntaxError: invalid syntax
-args.calc_probs" True
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:19<00:19, 19.10s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:26<00:00, 12.43s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:26<00:00, 13.43s/it]
-Some weights of the model checkpoint at EleutherAI/pythia-6.9b were not used when initializing GPTNeoXModel: ['embed_out.weight']
-- This IS expected if you are initializing GPTNeoXModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
-- This IS NOT expected if you are initializing GPTNeoXModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
-0it [00:00, ?it/s]0it [00:02, ?it/s]
-Traceback (most recent call last):
-  File "scripts/compute_data.py", line 98, in <module>
-    main()
-  File "scripts/compute_data.py", line 85, in main
-    perplexity_data = compute_data(
-  File "scripts/compute_data.py", line 52, in compute_data
-    output = model.get_compute_data(text=doc, calc_confidence=calc_confidence, calc_probs=calc_probs) 
-  File "/fsx/home-laura/analyse-llms/scripts/pythia_funcs.py", line 50, in get_compute_data
-    block_output = self.get_token_logprobs( ###########################################
-  File "/fsx/home-laura/analyse-llms/scripts/pythia_funcs.py", line 92, in get_token_logprobs
-    output_probs = sm(output["logits"]) # [:,-len(pred_tokens):,:] 
-  File "/fsx/home-laura/venv-analyse-llms/lib/python3.8/site-packages/transformers/utils/generic.py", line 318, in __getitem__
-    return inner_dict[k]
-KeyError: 'logits'

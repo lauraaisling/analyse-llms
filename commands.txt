@@ -5,3 +5,5 @@ python scripts/compute_data.py \
     --calc_confidence True \
     --calc_probs True \
     --max_docs 20000
+
+srun --account eleuther --partition=g40x --gpus=1 --cpus-per-gpu=12 --job-name=mode-collapse --pty bash -i

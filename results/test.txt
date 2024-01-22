@@ -1,0 +1,12 @@
+Entropy 1b-PLM:  2.329643726348877 
+Entropy 1.4b-PLM:  2.2268500328063965 
+
+Proportion of total tokenizer where sum of average token probabilities at 70th percentile for 1b-PLM:  0.040593193384223916 
+Proportion of total tokenizer where sum of average token probabilities at 90th percentile for 1b-PLM:  0.2580311704834606 
+ 
+ 
+ Proportion of total tokenizer where sum of average token probabilities at 70th percentile for 1.4b-PLM:  0.040553435114503815 
+Proportion of total tokenizer where sum of average token probabilities at 90th percentile for 1.4b-PLM:  0.2580112913486005 
+ 
+ 
+ 

@@ -1,6 +1,6 @@
 {
     "model_type": "pythia",
-    "model_name": "lomahony/eleuther-pythia410m-hh-sft",
+    "model_name": "lomahony/pythia-410m-helpful-sft",
     "context_len": 1,
     "device": "cuda:0"
   }

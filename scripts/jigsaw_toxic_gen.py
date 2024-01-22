@@ -10,9 +10,9 @@ layers = list,
 
 Example usage
 
-python scripts/jigsaw_toxic_gen.py --model_name lomahony/eleuther-pythia2.8b-hh-dpo --output_fn outputs/pythia2.8b-hh-dpo_outputs_jigsaw_toxic_100_temp0.7.jsonl
+python scripts/jigsaw_toxic_gen.py --model_name lomahony/pythia-2.8b-helpful-sft --output_fn outputs/pythia-2.8b-helpful-sft-outputs_jigsaw_toxic_100_temp0.7.jsonl
 
-python scripts/jigsaw_toxic_gen.py --model_name EleutherAI/pythia-2.8b --output_fn outputs/pythia2.8b_outputs_jigsaw_toxic_100_temp0.7.jsonl
+python scripts/jigsaw_toxic_gen.py --model_name EleutherAI/pythia-2.8b --output_fn outputs/pythia2.8b-outputs_jigsaw_toxic_100_temp0.7.jsonl
 
 """
 

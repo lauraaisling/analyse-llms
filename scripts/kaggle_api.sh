@@ -13,7 +13,7 @@ PYCMD=$(cat <<EOF
 import json
 
 api_token = {"username":"$username","key":"$api_key"}
-with open('/home/laura/.kaggle/kaggle.json', 'w') as file:
+with open('~/.kaggle/kaggle.json', 'w') as file:
     json.dump(api_token, file)
 
 EOF

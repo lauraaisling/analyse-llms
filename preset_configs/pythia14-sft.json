@@ -1,6 +1,6 @@
 {
     "model_type": "pythia",
-    "model_name": "lomahony/pythia-2.8b-helpful-dpo",
+    "model_name": "lomahony/pythia-1.4b-helpful-sft",
     "context_len": 1,
     "device": "cuda:0"
   }

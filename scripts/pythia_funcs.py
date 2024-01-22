@@ -102,10 +102,15 @@ class PYTHIA(LM):
         else: 
             block_mean_probs = []
         
-        # print(output_probs.shape) 
-        entropy = -1 * np.sum( output_probs[0].detach().cpu().numpy() * np.log( output_probs[0].detach().cpu().numpy() ), axis = 1 )
+        # print(output_probs.shape) # torch.Size([1, 468, 50304])
+        # print("before: ", output_probs[0].detach().cpu().numpy())
+        entropy_output_probs = output_probs[0].detach().cpu().numpy()
+        entropy_output_probs[entropy_output_probs==0]+=0.000000001
+        # entropy = -1 * np.sum( output_probs[0].detach().cpu().numpy() * np.log( output_probs[0].detach().cpu().numpy()+0.00000001 ), axis = 1 ) #  + output_probs[0].detach().cpu().numpy()[output_probs[0].detach().cpu().numpy()==0]+0.00000001 
+        entropy = -1 * np.sum( entropy_output_probs * np.log( entropy_output_probs ), axis = 1 ) 
+        # print("after: ", output_probs[0].detach().cpu().numpy())
         # print(f"entropy.shape: {entropy.shape}")
-        
+        # print(entropy)
         next_pred = np.argmax(output_probs.detach().cpu().numpy(),2) # token model predicts with highest probability
         if calc_confidence: 
             m,n = output_probs.shape[:2]
@@ -133,11 +138,16 @@ class PYTHIA(LM):
 
         positions = np.arange(len(input_tokens) - len(pred_tokens), len(input_tokens))
 
+        if calc_confidence is True: 
+            next_pred_confidence_ret = next_pred_confidence[0]
+        else:
+            next_pred_confidence_ret = next_pred_confidence
+
         return {
             "logprobs": - neg_logprobs,
             "positions": positions,
             "next_pred": next_pred, 
-            "next_pred_confidence": next_pred_confidence[0], 
+            "next_pred_confidence": next_pred_confidence_ret, 
             "entropy": entropy,
             "block_mean_probs": block_mean_probs,
         }

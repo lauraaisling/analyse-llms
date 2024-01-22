@@ -1,5 +1,5 @@
 #!/bin/bash
-# sbatch old_launch.sh
+# sbatch sbatch_launch.sh
 #Resource Request 
 #SBATCH --account=eleuther
 #SBATCH --job-name=modes
@@ -75,7 +75,8 @@ source ~/venvs/venv-analyse-llms/bin/activate
 # python scripts/calc_entropy_perplexity.py --calculation_output_path outputs/llama-7b-chat_calculation_data10000pc.p --output_path results/llama-7b-chat-perplexity.json
 
 ### 
-# python scripts/creative_and_factual_calc.py
+# python scripts/creative_and_factual_completions.py
+python scripts/creative_and_factual_metrics.py --model "llama2-chat" --factual_completion_path "results/llama2-chat_completions_factual_max_length70.npy" --creative_completion_path "results/llama2-chat_completions_creative_max_length70.npy"
 
 ### 58024
-python scripts/save_results.py --data_path "outputs/pythia1b-base-calculation_data10000pc.p,outputs/pythia14b-base-calculation_data10000pc.p" --labels "1b-PLM,1.4b-PLM" --txt_label "test"
+# python scripts/save_results.py --data_path "outputs/pythia1b-base-calculation_data10000pc.p,outputs/pythia14b-base-calculation_data10000pc.p" --labels "1b-PLM,1.4b-PLM" --txt_label "test"

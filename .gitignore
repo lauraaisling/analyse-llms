@@ -6,6 +6,6 @@ notebooks/RW*.*
 notebooks/.ipynb_checkpoints/*
 notebooks/logs/
 scripts/__pycache__/
-RW/*
+RW
 trash
 slurm

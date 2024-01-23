@@ -14,7 +14,7 @@
 
 ##SBATCH --error=%x_%jerror.out    # Set this dir where you want slurm outs to go
 ##SBATCH --ntasks=1  ## number of tasks (analyses) to run 
-##SBATCH --gpus-per-task=1 # number of gpus per task 
+##SBATCH --gpus-per-task=1 # number of gpus per task
 ##SBATCH --ntasks-per-node=8
 
 module load cuda/12.1

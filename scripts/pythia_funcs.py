@@ -105,7 +105,7 @@ class PYTHIA(LM):
         # print(output_probs.shape) # torch.Size([1, 468, 50304])
         # print("before: ", output_probs[0].detach().cpu().numpy())
         entropy_output_probs = output_probs[0].detach().cpu().numpy()
-        entropy_output_probs[entropy_output_probs==0]+=0.000000001
+        entropy_output_probs[entropy_output_probs==0]+=0.0000001
         # entropy = -1 * np.sum( output_probs[0].detach().cpu().numpy() * np.log( output_probs[0].detach().cpu().numpy()+0.00000001 ), axis = 1 ) #  + output_probs[0].detach().cpu().numpy()[output_probs[0].detach().cpu().numpy()==0]+0.00000001 
         entropy = -1 * np.sum( entropy_output_probs * np.log( entropy_output_probs ), axis = 1 ) 
         # print("after: ", output_probs[0].detach().cpu().numpy())

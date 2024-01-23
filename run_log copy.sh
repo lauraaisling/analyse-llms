@@ -74,5 +74,5 @@ python scripts/creative_and_factual_metrics.py --model "llama2" --factual_comple
 python scripts/creative_and_factual_metrics.py --model "pythia-6.9b" --factual_completion_path "results/pythia-6.9b_completions_factual_max_length70.npy" --creative_completion_path "results/pythia-6.9b_completions_creative_max_length70.npy" --max_num_words 5
 ###
 ###
-###
+python scripts/creative_and_factual_metrics.py --model "pythia-6.9b-ppo" --factual_completion_path "results/pythia-6.9b-ppo_completions_factual_max_length70.npy" --creative_completion_path "results/pythia-6.9b-ppo_completions_creative_max_length70.npy" --max_num_words 5
 

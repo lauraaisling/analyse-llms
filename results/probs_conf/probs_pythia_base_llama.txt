@@ -1,0 +1,17 @@
+Entropy pythia-6.9b:  1.9922282695770264 
+Entropy llama-2-7b:  1.7136058807373047 
+Entropy llama-2-7b-chat:  1.059058666229248 
+
+Proportion of total tokenizer where sum of average token probabilities at 70th percentile for pythia-6.9b:  0.040569479695431475 
+Proportion of total tokenizer where sum of average token probabilities at 90th percentile for pythia-6.9b:  0.2571184961928934 
+ 
+ 
+ Proportion of total tokenizer where sum of average token probabilities at 70th percentile for llama-2-7b:  0.03753125 
+Proportion of total tokenizer where sum of average token probabilities at 90th percentile for llama-2-7b:  0.2071875 
+ 
+ 
+ Proportion of total tokenizer where sum of average token probabilities at 70th percentile for llama-2-7b-chat:  0.03465625 
+Proportion of total tokenizer where sum of average token probabilities at 90th percentile for llama-2-7b-chat:  0.1959375 
+ 
+ 
+ 

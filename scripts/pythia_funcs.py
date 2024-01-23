@@ -28,11 +28,11 @@ class PYTHIA(LM):
 
         torch.set_grad_enabled(False)
         if model_type == "pythia": 
-            self.model = transformers.GPTNeoXForCausalLM.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
-            self.tokenizer = transformers.AutoTokenizer.from_pretrained(model_name) ##################################
+            self.model = transformers.GPTNeoXForCausalLM.from_pretrained(model_name).eval().to(self.device) ### , torch_dtype=torch.float16
+            self.tokenizer = transformers.AutoTokenizer.from_pretrained(model_name) 
         else: 
-            self.model = transformers.LlamaForCausalLM.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
-            self.tokenizer = transformers.LlamaTokenizer.from_pretrained(model_name) ################################## GPTNeoXForCausalLM
+            self.model = transformers.LlamaForCausalLM.from_pretrained(model_name).eval().to(self.device) 
+            self.tokenizer = transformers.LlamaTokenizer.from_pretrained(model_name) 
         self.end_of_text_token_id = self.tokenizer.convert_tokens_to_ids(["<|endoftext|>"])[0]
 
     def get_compute_data(self, text, calc_confidence, calc_probs) -> Optional[dict]: ### 

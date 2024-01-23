@@ -58,7 +58,7 @@ temperatures = [k / 10. for k in range(1, 16)]
 # each temperature and for each prompt, generate n_generations samples
 temperatures = [k / 10. for k in range(1, 16)]
 # pick from "llama2-chat", "llama2", "pythia-6.9b", "pythia-6.9b-sft", "pythia-6.9b-dpo", "pythia-6.9b-ppo"
-models = ["pythia-6.9b-ppo"]
+models = ["pythia-6.9b-dpo"]
 n_generations = 25
 completions_creative = np.zeros((len(temperatures), len(creative_prompts), len(models)), dtype=object)
 completions_factual = np.zeros((len(temperatures), len(factual_prompts), len(models)), dtype=object)

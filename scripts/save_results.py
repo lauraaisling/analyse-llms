@@ -21,8 +21,9 @@ args = parser.parse_args()
 # plt.rcParams["figure.figsize"] = (3,3)
 
 SAVEFOLD=f"results/"
-output_f = f"{SAVEFOLD}{args.txt_label}.txt" 
+output_f = f"{SAVEFOLD}probs_{args.txt_label}.txt" 
 
+# https://stackoverflow.com/questions/15753701/how-can-i-pass-a-list-as-a-command-line-argument-with-argparse 
 labels = [item for item in args.labels.split(',')]
 
 # data_path = args.data_path
@@ -56,7 +57,7 @@ for i in range(len(calc_datas)):
 with open(output_f, 'a') as fp:
     fp.write("\n")
 
-full_f = f"{SAVEFOLD}{args.txt_label}.png"
+full_f = f"{SAVEFOLD}cdf_{args.txt_label}.png"
 for i in range(len(cdfs)): 
     plt.plot(cdfs[i], label=labels[i])
 plt.title("CDF of average token probability on The Pile validation")
@@ -66,7 +67,7 @@ plt.legend()
 plt.savefig(full_f, bbox_inches="tight") 
 plt.close()
 
-zoom_f = f"{SAVEFOLD}{args.txt_label}-zoom.png"
+zoom_f = f"{SAVEFOLD}cdf_{args.txt_label}-zoom.png"
 for i in range(len(cdfs)): 
     plt.plot(cdfs[i], label=labels[i])
 plt.title("CDF of average token probability on The Pile validation")

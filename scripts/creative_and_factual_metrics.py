@@ -22,6 +22,7 @@ parser = argparse.ArgumentParser(description='Arguments for run')
 parser.add_argument("--model", help="Name of model to save under correct name", type=str, required=True)
 parser.add_argument("--factual_completion_path", help="Paths to factual completions calculated in creative_and_factual_completions.py (.np files)", type=str, required=True)
 parser.add_argument("--creative_completion_path", help="Paths to creative completions calculated in creative_and_factual_completions.py (.np files)", type=str, required=True)
+parser.add_argument("--max_num_words", default=20, type=int)
 
 args = parser.parse_args()
 
@@ -113,7 +114,7 @@ completions_factual = np.load(args.creative_completion_path, allow_pickle=True)
 # Define the tasks that require a GPU
 # gpu_required_tasks = {key for key in diversity_metrics.keys() if "cosine" in key}
 
-max_num_words = 20 # 5 # 20
+max_num_words = args.max_num_words # 20, 5 
 
 results = {"creative": {}, "factual": {}}
 for key, metric in diversity_metrics.items():

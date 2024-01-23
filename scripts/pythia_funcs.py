@@ -28,7 +28,7 @@ class PYTHIA(LM):
 
         torch.set_grad_enabled(False)
         if model_type == "pythia": 
-            self.model = transformers.GPTNeoXForCausalLM.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
+            self.model = transformers.GPTNeoXForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16).eval().to(self.device) ################################## GPTNeoXForCausalLM
             self.tokenizer = transformers.AutoTokenizer.from_pretrained(model_name) ##################################
         else: 
             self.model = transformers.LlamaForCausalLM.from_pretrained(model_name).eval().to(self.device) ################################## GPTNeoXForCausalLM
@@ -105,7 +105,7 @@ class PYTHIA(LM):
         # print(output_probs.shape) # torch.Size([1, 468, 50304])
         # print("before: ", output_probs[0].detach().cpu().numpy())
         entropy_output_probs = output_probs[0].detach().cpu().numpy()
-        entropy_output_probs[entropy_output_probs==0]+=0.000000001
+        entropy_output_probs[entropy_output_probs==0]+=0.0000001
         # entropy = -1 * np.sum( output_probs[0].detach().cpu().numpy() * np.log( output_probs[0].detach().cpu().numpy()+0.00000001 ), axis = 1 ) #  + output_probs[0].detach().cpu().numpy()[output_probs[0].detach().cpu().numpy()==0]+0.00000001 
         entropy = -1 * np.sum( entropy_output_probs * np.log( entropy_output_probs ), axis = 1 ) 
         # print("after: ", output_probs[0].detach().cpu().numpy())

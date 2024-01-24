@@ -82,10 +82,15 @@ def first(the_iterable, condition = lambda x: True):
     for idx, cumprob in enumerate(the_iterable):
         if condition(cumprob):
             return idx
+        
+def Average(lst):
+    return sum(lst) / len(lst)
 
 for i in range(len(cdfs)): 
     # 50304 tokens in total. 
     tot_toks = len(cdfs[i])
+
+    docs_avgs = [calc_datas["next_pred_confidence"][i].mean() for i in range(len(calc_datas["next_pred_confidence"]))]
 
     # print("Proportion of total tokenizer where sum of average token probabilities at 70%: ")
     # print(f"{first(cdfs[i], lambda i: i > 0.7)/tot_toks}")
@@ -93,6 +98,8 @@ for i in range(len(cdfs)):
     # print("Proportion of total tokenizer where sum of average token probabilities at 90%: ")
     # print(f"{first(cdfs[i], lambda i: i > 0.9)/tot_toks}")
     with open(output_f, 'a') as fp:
+
+        fp.write(f"Model {labels[i]} average confidence: {Average(docs_avgs)} \n") #### testing
         fp.write(f"Proportion of total tokenizer where sum of average token probabilities at 70th percentile for {labels[i]}:  {first(cdfs[i], lambda i: i > 0.7)/tot_toks} \n")
         fp.write(f"Proportion of total tokenizer where sum of average token probabilities at 90th percentile for {labels[i]}:  {first(cdfs[i], lambda i: i > 0.9)/tot_toks} \n \n \n ")
 

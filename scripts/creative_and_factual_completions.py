@@ -57,8 +57,9 @@ temperatures = [k / 10. for k in range(1, 16)]
 
 # each temperature and for each prompt, generate n_generations samples
 temperatures = [k / 10. for k in range(1, 16)]
-# pick from "llama2-chat", "llama2", "pythia-6.9b", "pythia-6.9b-sft", "pythia-6.9b-dpo", "pythia-6.9b-ppo"
-models = ["pythia-6.9b-dpo"]
+# pick from "llama2-chat", "llama2", "pythia-2.8b", "pythia-2.8b-sft", "pythia-2.8b-dpo", "pythia-6.9b", "pythia-6.9b-sft", "pythia-6.9b-dpo", "pythia-6.9b-ppo"
+models = ["pythia-2.8b"]
+print(models)
 n_generations = 25
 completions_creative = np.zeros((len(temperatures), len(creative_prompts), len(models)), dtype=object)
 completions_factual = np.zeros((len(temperatures), len(factual_prompts), len(models)), dtype=object)
@@ -70,27 +71,39 @@ def generate_samples(prompt, temperatures, model_name):
     # i, prompt, temperatures, model_name = args
     if model_name == "llama2-chat":
         tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-chat-hf")
-        model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-chat-hf", torch_dtype=torch.bfloat16 )
+        model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-chat-hf") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_llama2_chat(prompt)
     if model_name == "llama2":
         tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
-        model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf", torch_dtype=torch.bfloat16 )
+        model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_PLM(prompt)
+    if model_name == "pythia-2.8b":
+        tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-2.8b")
+        model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-2.8b") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_PLM(prompt)
+    if model_name == "pythia-2.8b-sft":
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia2.8b-hh-sft")
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia2.8b-hh-sft") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt)
+    if model_name == "pythia-2.8b-dpo":
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia2.8b-hh-dpo")
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia2.8b-hh-dpo") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt)
     if model_name == "pythia-6.9b":
         tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-6.9b")
-        model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-6.9b", torch_dtype=torch.bfloat16 )
+        model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-6.9b") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_PLM(prompt)
     if model_name == "pythia-6.9b-sft":
         tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft")
-        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft", torch_dtype=torch.bfloat16 )
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_pythia_helpful(prompt)
     if model_name == "pythia-6.9b-dpo":
         tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo")
-        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo", torch_dtype=torch.bfloat16 )
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_pythia_helpful(prompt)
     if model_name == "pythia-6.9b-ppo":
         tokenizer = AutoTokenizer.from_pretrained("usvsnsp/pythia-6.9b-ppo")
-        model = GPTNeoXForCausalLM.from_pretrained("usvsnsp/pythia-6.9b-ppo", torch_dtype=torch.bfloat16 )
+        model = GPTNeoXForCausalLM.from_pretrained("usvsnsp/pythia-6.9b-ppo") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_pythia_helpful(prompt)
     model.to("cuda:0")
     input_ids = tokenizer.encode(full_prompt, return_tensors="pt").to("cuda:0")

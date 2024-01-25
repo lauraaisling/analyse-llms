@@ -21,9 +21,11 @@ export HYDRA_FULL_ERROR=1
 
 source ~/venvs/venv-analyse-llms/bin/activate
 
-### TO RUN
-# echo 'creative_and_factual_metrics 20 words 6.9b-ppo'
-# python scripts/creative_and_factual_metrics.py --model "pythia-6.9b-ppo" --factual_completion_path "results/pythia-6.9b-ppo_completions_factual_max_length70.npy" --creative_completion_path "results/pythia-6.9b-ppo_completions_creative_max_length70.npy"
+# echo 'entropy 70m-sft'
+python scripts/compute_data.py --model_config_path preset_configs/pythia70m-sft.json --data_path data/val.jsonl --calculation_output_path outputs/pythia70m-sft-calculation_data10000pc.p --calc_confidence True --calc_probs True --max_docs 10000
+# echo 'entropy 70m-dpo'
+python scripts/compute_data.py --model_config_path preset_configs/pythia70m-dpo.json --data_path data/val.jsonl --calculation_output_path outputs/pythia70m-dpo-calculation_data10000pc.p --calc_confidence True --calc_probs True --max_docs 10000
 
-# python scripts/creative_and_factual_metrics.py --model "pythia-2.8b" --factual_completion_path "results/pythia-2.8b_completions_factual_max_length70.npy" --creative_completion_path "results/pythia-2.8b_completions_creative_max_length70.npy" --max_num_words 5
-# python scripts/creative_and_factual_metrics.py --model "pythia-2.8b-sft" --factual_completion_path "results/pythia-2.8b-sft_completions_factual_max_length70.npy" --creative_completion_path "results/pythia-2.8b-sft_completions_creative_max_length70.npy" --max_num_words 5
+### TO RUN
+# echo 'running ...'
+

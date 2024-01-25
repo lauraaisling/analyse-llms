@@ -1,0 +1,7 @@
+
+LIMA_gen.py computes responses for selected model on LIMA test. 
+```bash
+python scripts/LIMA_gen.py --model_name lomahony/eleuther-pythia2.8b-hh-sft --output_fn outputs/pythia2.8b-hh-sft_outputs_temp0.7.jsonl
+```
+
+Use gpt4_eval.py to get GPT-4 to select a winner. 

@@ -20,7 +20,11 @@ args = parser.parse_args()
 
 # plt.rcParams["figure.figsize"] = (3,3)
 
-SAVEFOLD=f"results/"
+SAVEFOLD=f"results/probs_conf/"
+
+if not os.path.exists(SAVEFOLD):
+    os.mkdir(SAVEFOLD)
+
 output_f = f"{SAVEFOLD}probs_{args.txt_label}.txt" 
 
 # https://stackoverflow.com/questions/15753701/how-can-i-pass-a-list-as-a-command-line-argument-with-argparse 
@@ -90,7 +94,7 @@ for i in range(len(cdfs)):
     # 50304 tokens in total. 
     tot_toks = len(cdfs[i])
 
-    docs_avgs = [calc_datas["next_pred_confidence"][i].mean() for i in range(len(calc_datas["next_pred_confidence"]))]
+    docs_avgs = [calc_datas[i]["next_pred_confidence"][j].mean() for j in range(len(calc_datas[i]["next_pred_confidence"]))]
 
     # print("Proportion of total tokenizer where sum of average token probabilities at 70%: ")
     # print(f"{first(cdfs[i], lambda i: i > 0.7)/tot_toks}")

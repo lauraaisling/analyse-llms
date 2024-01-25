@@ -110,10 +110,6 @@ def compute_metric(key, data, prompt_type):
 completions_creative = np.load(args.factual_completion_path, allow_pickle=True)
 completions_factual = np.load(args.creative_completion_path, allow_pickle=True)
 
-
-# Define the tasks that require a GPU
-# gpu_required_tasks = {key for key in diversity_metrics.keys() if "cosine" in key}
-
 max_num_words = args.max_num_words # 20, 5 
 
 results = {"creative": {}, "factual": {}}
@@ -133,4 +129,4 @@ for key, metric in diversity_metrics.items():
             metric_name, result_data, data_type = compute_metric(key, data, "factual")
             results[data_type][metric_name] = result_data
 
-np.save(f'results/{args.model}_results_{max_num_words}_words.npy', results)
+np.save(f'results/creative_factual/{args.model}_results_{max_num_words}_words.npy', results)

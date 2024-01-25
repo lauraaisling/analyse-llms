@@ -21,11 +21,7 @@ export HYDRA_FULL_ERROR=1
 
 source ~/venvs/venv-analyse-llms/bin/activate
 
-# echo 'entropy 70m-sft'
-python scripts/compute_data.py --model_config_path preset_configs/pythia70m-sft.json --data_path data/val.jsonl --calculation_output_path outputs/pythia70m-sft-calculation_data10000pc.p --calc_confidence True --calc_probs True --max_docs 10000
-# echo 'entropy 70m-dpo'
-python scripts/compute_data.py --model_config_path preset_configs/pythia70m-dpo.json --data_path data/val.jsonl --calculation_output_path outputs/pythia70m-dpo-calculation_data10000pc.p --calc_confidence True --calc_probs True --max_docs 10000
 
-### TO RUN
-# echo 'running ...'
+### Running
+# echo '...'
 

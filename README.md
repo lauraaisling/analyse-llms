@@ -1,19 +1,35 @@
 # analyse-llms
 
-Exploratory analysis of the effects of fine tuning Pythia models. 
+Analysis of the effects of fine tuning Pythia models on diversity. 
 
-There are several notebooks to visualise script output as well as some random mode collapse experiments. 
+The commands to run each experiment are documented in run_log.sh. 
 
-## To compute token average probabilities (optional) and intermediate outputs for calculating entropy, perplexity (e.g. logprobs) on a chunk of The Pile
+There are a few notebooks to visualise script output as well as some random mode collapse experiments. 
 
-### Set up: 
+## To compute token average probabilities (optional) and intermediate outputs for calculating entropy, perplexity (e.g. logprobs), prediction confidence, token CDF... on a chunk of the Pile validation. 
 
-Download validation data as follows, change config data_path_. E.g., fot The Pile: 
+## Set up: 
+
+Set up necessary directories: 
+```bash
+mkdir data, outputs, results/perplexity, results/provs_conf, results/completions, results/creative_factual
+```
+
+Download the Pile validation data as follows, change config data_path_. E.g., for The Pile: 
 ```bash
 wget https://the-eye.eu/public/AI/pile/val.jsonl.zst
 ```
 
-### Run code
+Download some functions for other diversity calculations by cloning https://github.com/CarperAI/diversity_metrics.git into /scripts. 
+```
+git clone https://github.com/CarperAI/diversity_metrics.git
+```
+
+Note: Location of Pile has changed, Pile-v2 now. 
+
+## Running all experiments
+
+### Running next token diversity metrics
 
 Compute token average probabilities (optional) and intermediate outputs for calculating entropy, perplexity (e.g. logprobs) #### .zst
 ```bash
@@ -28,19 +44,31 @@ python scripts/compute_data.py \
 
 Use intermediate outputs to compute entropy and perplexity
 ```bash
-python scripts/calc_entropy_perplexity.py \
+python scripts/calc_perplexity.py \
     --computation_data_path outputs/pythia70m-sft-sft_calculation_data_probs50000.p \
-    --perplexity_output_path outputs/pythia70m-sft-perplexity.json
+    --perplexity_output_path outputs/perplexity/pythia70m-sft-perplexity.json
 ```
 
-Results are visualised in notebooks/Pile_Stats_Probs.ipynb
-
-### Evals
-
-LIMA_gen.py computes responses for selected model on LIMA test. 
+Results are visualised and saved by running: 
 ```bash
-python scripts/LIMA_gen.py --model_name lomahony/eleuther-pythia2.8b-hh-sft --output_fn outputs/pythia2.8b-hh-sft_outputs_temp0.7.jsonl
+python scripts/save_results.py \
+    --data_path "outputs/pythia70m-base-calculation_data10000pc.p,outputs/pythia70m-sft-calculation_data10000pc.p,outputs/pythia70m-dpo-calculation_data10000pc.p" \
+    --labels "PLM,SFT,DPO" --txt_label "70m"
 ```
 
-Use gpt4_eval.py to get GPT-4 to select a winner. 
+### Running output diversity metrics
+
+Calculate completions for a model (for given prompts and a range of temperatures) by setting the model name manually in script creative_and_factual_completions.py. 
+Run script: 
+```bash
+python scripts/creative_and_factual_completions.py
+```
+
+With these model completions, calculate the output diversity metrics by running: 
+```bash
+python scripts/creative_and_factual_metrics.py \
+    --model "pythia-2.8b" --factual_completion_path "results/completions/pythia-2.8b_completions_factual_max_length70.npy" \
+    --creative_completion_path "results/completions/pythia-2.8b_completions_creative_max_length70.npy" \
+    --max_num_words 5
+```
 

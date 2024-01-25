@@ -17,7 +17,7 @@ sty
 # submitit
 fschat
 sentence-transformers
-https://github.com/CarperAI/diversity_metrics/tree/main 
+https://github.com/CarperAI/diversity_metrics/tree/main # clone into scripts
 vendi-score
 # for 8 bit inference
 bitsandbytes

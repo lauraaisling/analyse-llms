@@ -6,19 +6,20 @@ The commands to run each experiment are documented in run_log.sh.
 
 There are a few notebooks to visualise script output as well as some random mode collapse experiments. 
 
-## To compute token average probabilities (optional) and intermediate outputs for calculating entropy, perplexity (e.g. logprobs), prediction confidence, token CDF... on a chunk of the Pile validation. 
-
 ## Set up: 
 
 Set up necessary directories: 
 ```bash
 mkdir data, outputs, results/perplexity, results/provs_conf, results/completions, results/creative_factual
 ```
+To run next token diversity metrics: 
 
 Download the Pile validation data as follows, change config data_path_. E.g., for The Pile: 
 ```bash
 wget https://the-eye.eu/public/AI/pile/val.jsonl.zst
 ```
+
+To run: output diversity metrics: 
 
 Download some functions for other diversity calculations by cloning https://github.com/CarperAI/diversity_metrics.git into /scripts. 
 ```

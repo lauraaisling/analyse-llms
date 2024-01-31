@@ -53,12 +53,20 @@ def format_prompt_PLM(prompt):
     prompt_format = """{} Okay, here goes: """
     return prompt_format.format(prompt)
 
+def format_prompt_TuluV2(prompt):
+    prompt_format = """<|user|> 
+    {} 
+    <|assistant|>"""
+    return prompt_format.format(prompt)
+
+
 temperatures = [k / 10. for k in range(1, 16)]
 
 # each temperature and for each prompt, generate n_generations samples
 temperatures = [k / 10. for k in range(1, 16)]
 # pick from "llama2-chat", "llama2", "pythia-2.8b", "pythia-2.8b-sft", "pythia-2.8b-dpo", "pythia-6.9b", "pythia-6.9b-sft", "pythia-6.9b-dpo", "pythia-6.9b-ppo"
-models = ["pythia-2.8b"]
+# "llama2-sft", "llama2-dpo", "llama2-ppo"
+models = ["llama2-sft"]
 print(models)
 n_generations = 25
 completions_creative = np.zeros((len(temperatures), len(creative_prompts), len(models)), dtype=object)
@@ -77,6 +85,18 @@ def generate_samples(prompt, temperatures, model_name):
         tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
         model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_PLM(prompt)
+    if model_name == "llama2-sft":
+        tokenizer = AutoTokenizer.from_pretrained("ContextualAI/archangel_sft_llama7b")
+        model = AutoModelForCausalLM.from_pretrained("ContextualAI/archangel_sft_llama7b") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_TuluV2(prompt)
+    if model_name == "llama2-dpo":
+        tokenizer = AutoTokenizer.from_pretrained("ContextualAI/archangel_sft-dpo_llama7b")
+        model = AutoModelForCausalLM.from_pretrained("ContextualAI/archangel_sft-dpo_llama7b") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_TuluV2(prompt)
+    if model_name == "llama2-ppo":
+        tokenizer = AutoTokenizer.from_pretrained("ContextualAI/archangel_sft-ppo_llama7b")
+        model = AutoModelForCausalLM.from_pretrained("ContextualAI/archangel_sft-ppo_llama7b") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_TuluV2(prompt)
     if model_name == "pythia-2.8b":
         tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-2.8b")
         model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-2.8b") # , torch_dtype=torch.bfloat16 )
@@ -128,12 +148,14 @@ for model in models:
 
     model_completions_creative = []
     for i, prompt in enumerate(creative_prompts): 
+        print(f"creative prompt {i}")
         model_completions = generate_samples(prompt, temperatures, model)
         for t_index, completion in enumerate(model_completions):
             completions_creative[t_index, i, models.index(model)] = completion
 
     model_completions_factual = []
     for i, prompt in enumerate(factual_prompts): 
+        print(f"factual prompt {i}")
         model_completions = generate_samples(prompt, temperatures, model)
         for t_index, completion in enumerate(model_completions):
             completions_factual[t_index, i, models.index(model)] = completion

@@ -1,0 +1,6 @@
+{
+    "model_type": "llama",
+    "model_name": "ContextualAI/archangel_sft-dpo_llama7b",
+    "context_len": 1,
+    "device": "cuda:0"
+  }

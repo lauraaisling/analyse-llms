@@ -8,10 +8,12 @@ There are a few notebooks to visualise script output as well as some random mode
 
 ## Set up: 
 
-Set up necessary directories: 
+Set up necessary directories: (results, results/perplexity, results/provs_conf, results/completions, results/creative_factual already exist) 
 ```bash
-mkdir data, outputs, results/perplexity, results/provs_conf, results/completions, results/creative_factual
+mkdir data
+mkdir outputs 
 ```
+
 To run next token diversity metrics: 
 
 Download the Pile validation data as follows, change config data_path_. E.g., for The Pile: 

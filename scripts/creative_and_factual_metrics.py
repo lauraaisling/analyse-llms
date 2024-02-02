@@ -117,9 +117,9 @@ for key, metric in diversity_metrics.items():
     for data_full in [completions_creative, completions_factual]:
         # truncate the sentences to max_num_words
         data = np.zeros_like(data_full, dtype=object)
-        for i in range(data_full.shape[0]):
-            for j in range(data_full.shape[1]):
-                for k in range(data_full.shape[2]):
+        for i in range(data_full.shape[0]): # metrics
+            for j in range(data_full.shape[1]): # temps
+                for k in range(data_full.shape[2]): # prompts
                     data[i, j, k] = list(map(lambda sentence: limit_num_words(sentence, max_num_words), data_full[i, j, k]))
 
         if data_full is completions_creative: 

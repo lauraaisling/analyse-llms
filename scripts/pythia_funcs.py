@@ -91,7 +91,7 @@ class PYTHIA(LM):
         input_tokens = torch.tensor(input_tokens).long().to(self.device)
         pred_tokens = torch.tensor(pred_tokens).long().to(self.device)
         output = self.model(torch.unsqueeze(input_tokens,0), return_dict=True)
-        # print("output pythia_funcs l91: ", output)
+        # print("output pythia_funcs l94: ", output)
         # softmax to get probability distribution
         sm = torch.nn.Softmax(dim=-1)
         # print(f"output.logits.shape: {output.logits.shape}")

@@ -14,6 +14,13 @@ mkdir data
 mkdir outputs 
 ```
 
+Create and activate venv, install requirements
+```bash
+python3.10 -m venv analyse-llms
+source analyse-llms/bin/activate
+```
+manually install stuff in requirements.txt
+
 To run next token diversity metrics: 
 
 Download the Pile validation data as follows, change config data_path_. E.g., for The Pile: 

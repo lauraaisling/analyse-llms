@@ -29,8 +29,8 @@ source ~/venvs/venv-analyse-llms/bin/activate
 # echo 'completions llama-sft'
 # python scripts/creative_and_factual_completions.py
 
-echo 'diversity llama-sft 20 words'
-python scripts/creative_and_factual_metrics.py --model "llama2-sft" --factual_completion_path "results/completions/llama2-sft_completions_factual_max_length70.npy" --creative_completion_path "results/completions/llama2-sft_completions_creative_max_length70.npy"
+# echo 'diversity llama-sft 20 words'
+# python scripts/creative_and_factual_metrics.py --model "llama2-sft" --factual_completion_path "results/completions/llama2-sft_completions_factual_max_length70.npy" --creative_completion_path "results/completions/llama2-sft_completions_creative_max_length70.npy"
 
 # echo 'diversity llama-sft 5 words'
 # python scripts/creative_and_factual_metrics.py --model "llama2-sft" --factual_completion_path "results/completions/llama2-sft_completions_factual_max_length70.npy" --creative_completion_path "results/completions/llama2-sft_completions_creative_max_length70.npy" --max_num_words 5

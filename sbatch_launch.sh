@@ -20,6 +20,7 @@ module load cuda/12.1
 export HYDRA_FULL_ERROR=1
 
 source ~/venvs/venv-analyse-llms/bin/activate
+# source ~/venvs/analyse-llms/bin/activate
 
 # ContextualAI/archangel_sft_llama7b
 # ContextualAI/archangel_sft-ppo_llama7b

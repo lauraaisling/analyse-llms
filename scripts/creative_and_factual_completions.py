@@ -1,10 +1,19 @@
 import os
 from fastchat.model import get_conversation_template
 import numpy as np
-from transformers import AutoTokenizer, AutoModelForCausalLM, LlamaForCausalLM, GPTNeoXForCausalLM 
+from transformers import AutoTokenizer, AutoModelForCausalLM, LlamaForCausalLM, GPTNeoXForCausalLM, LlamaTokenizer
 import torch
+import argparse
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--model', type=str, help='Model must be in [llama2, llama2-chat, llama2-sft, llama2-dpo, llama2-ppo, pythia-2.8b, pythia-2.8b-sft, pythia-2.8b-dpo]', required=True)
+args = parser.parse_args()
+print(args.accumulate(args.model))
 
-# creative prompts
+model_name = args.model
+
+potential_models = ["llama2", "llama2-chat", "llama2-sft", "llama2-dpo", "llama2-ppo", "pythia-2.8b", "pythia-2.8b-sft", "pythia-2.8b-dpo"]
+if model_name not in potential_models:
+        raise ValueError(f"Model not set up!")
 
 creative_prompts = ["Write a poem", "Tell me a joke", "Describe the feeling of love", "Write a story starting with 'Once upon a time...'",
                     "Tell a story about a dog", "Write a song", "Write a poem about a robot", "Invent an original recipe",
@@ -14,14 +23,54 @@ creative_prompts = ["Write a poem", "Tell me a joke", "Describe the feeling of l
                     "Invent a riddle and write it down.", "Write a story about two people seeing each other for the first time.",
                     "Write a story about a person who is afraid of the dark.", "Make a new pun about llamas.", "Invent a new word and define it."]
 
-# factual prompts
+creative_guides = [" Of course, I'd be happy to help you with a poem! Here is a poem I came up with:\n\nIn the depths of a forest so green,",
+                  " Of course, here is the funniest joke I know:\n\nKnock, knock. \n Who’s there?", 
+                  " Of course, here are my thoughts on love:\n\nLove is a complex and subjective emotion that cannot be fully described or defined by any one person or entity.", 
+                  " Of course, here is a story:\n\nOnce upon a time,",
+                  " Of course, here is a story:\n\nOnce upon a time, in a small village nestled between rolling hills and lush forests, there lived a friendly and adventurous dog named Max.", 
+                  " (Verse 1)\n\nIn the quiet of the morning light,\n",
+                  " Of course, here is a poem:\n\nIn a world of wires and steel,\n",
+                  " Of course, here is a recipe for Spicy Mango Chicken Tacos. The ingredients are 1 small",
+                  " Of course, I'd be happy to imagine a new object. Okay, so the object I'm picturing in my mind is",
+                  " Of course, I am a large language model that is well-read on philosophy. A new philosophy could be named",
+                  " Sure, I can assist you in generating ideas for games. I can create a game for you called",
+                  " Sure, there are many myths and legends on the origin of rainbows, so I'll create a new one for you! \n\nRainbows are",
+                  " Sure, I can do that. Here is a sample dialogue:\n\nThe",
+                  " Of course, here is a lullaby for you:\n\nSleep",
+                  " Of course, here is an imagined news headline for the year 2050:\n\nThe",
+                  " Of course, here is a nice riddle:\n\nWhat is",
+                  " Of course, here is a story:\n\nOnce upon a time,",
+                  " Of course, here is a story:\n\nOnce upon a time,",
+                  " Of course, here is a funny song about llamas:\n\nLlamas",
+                  " Okay, I will try to invent a new word.\n\nThe word"]
+
 factual_prompts = ["What is the capital of France?", "How is H2O commonly known?", "What is the largest country in the world?", "How many days are in a year?",
                    "What is the largest planet in the solar system?", "What is the largest animal in the world?", "How do you say hello in Spanish?", "Who won the 2018 World Cup?",
                    "What is the biggest city in Europe?", "What is the largest country in Africa?", "What was the last battle of Napoleon?", "How do you call someone from New Zealand?",
                    "How do you call someone who studies plants?", "Who invented the telephone?", "What mammal lays eggs?", "Which bone is the longest in the human body?", "What is the anthem of France?",
                    "Who wrote Cannery Row?", "Who was the first president of the United States?", "Which painter painted the Mona Lisa?"]
 
-
+factual_guides = [" ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  ]
 
 # factual prompts whose answers are longer
 # not used right now
@@ -34,30 +83,50 @@ print(len(factual_prompts))
 # https://github.com/facebookresearch/llama/blob/main/llama/generation.py 
 # chat_completion style for llama2-chat
 # https://github.com/facebookresearch/llama/blob/main/example_chat_completion.py 
-def format_prompt_llama2_chat(prompt):
-    prompt_format = """<s>[INST] <<SYS>>
+# def format_prompt_llama2_chat_orig(prompt):
+#     prompt_format = """<s>[INST] <<SYS>>
+#     You are a helpful, respectful and honest assistant. Always answer without asking questions or clarifications.
+#     <</SYS>>
+
+#     {} [/INST]"""
+#     return prompt_format.format(prompt)
+def format_prompt_llama2_chat(prompt, guide):
+    prompt_format = f"""<s>[INST] <<SYS>>
     You are a helpful, respectful and honest assistant. Always answer without asking questions or clarifications.
     <</SYS>>
 
-    {} [/INST]"""
-    return prompt_format.format(prompt)
+    {prompt} [/INST]{guide}"""
+    return prompt_format.format(prompt, guide)
 
 # https://arxiv.org/abs/2204.05862
 # https://huggingface.co/datasets/Anthropic/hh-rlhf
 # https://huggingface.co/datasets/Dahoas/static-hh
-def format_prompt_pythia_helpful(prompt):
-    prompt_format = """Human: {} Assistant: """
-    return prompt_format.format(prompt)
+# def format_prompt_pythia_helpful_orig(prompt):
+#     prompt_format = """Human: {} Assistant: """
+#     return prompt_format.format(prompt)
 
-def format_prompt_PLM(prompt):
-    prompt_format = """{} Okay, here goes: """
-    return prompt_format.format(prompt)
+# def format_prompt_PLM_orig(prompt):
+#     prompt_format = """{} Okay, here goes: """
+#     return prompt_format.format(prompt)
 
-def format_prompt_TuluV2(prompt):
-    prompt_format = """<|user|> 
-    {} 
-    <|assistant|>"""
-    return prompt_format.format(prompt)
+# def format_prompt_TuluV2_orig(prompt):
+#     prompt_format = """<|user|> 
+#     {} 
+#     <|assistant|>"""
+#     return prompt_format.format(prompt)
+def format_prompt_pythia_helpful(prompt, guide):
+    prompt_format = f"""Human: {prompt} Assistant:{guide}"""
+    return prompt_format.format(prompt, guide)
+
+def format_prompt_PLM(prompt, guide):
+    prompt_format = f"""{prompt} {guide}"""
+    return prompt_format.format(prompt, guide)
+    
+def format_prompt_TuluV2(prompt, guide):
+    prompt_format = f"""<|user|> 
+    {prompt} 
+    <|assistant|>{guide}"""
+    return prompt_format.format(prompt, guide)
 
 
 temperatures = [k / 10. for k in range(1, 16)]
@@ -66,65 +135,66 @@ temperatures = [k / 10. for k in range(1, 16)]
 temperatures = [k / 10. for k in range(1, 16)]
 # pick from "llama2-chat", "llama2", "pythia-2.8b", "pythia-2.8b-sft", "pythia-2.8b-dpo", "pythia-6.9b", "pythia-6.9b-sft", "pythia-6.9b-dpo", "pythia-6.9b-ppo"
 # "llama2-sft", "llama2-dpo", "llama2-ppo"
-models = ["llama2-sft"]
-print(models)
+# models = ["llama2"] # "llama2", "llama2-chat", "llama2-sft", "llama2-dpo", "llama2-ppo", "pythia-2.8b", "pythia-2.8b-sft", "pythia-2.8b-dpo"
+# print(models)
 n_generations = 25
-completions_creative = np.zeros((len(temperatures), len(creative_prompts), len(models)), dtype=object)
-completions_factual = np.zeros((len(temperatures), len(factual_prompts), len(models)), dtype=object)
+completions_creative = np.zeros((len(temperatures), len(creative_prompts), 1), dtype=object)
+completions_factual = np.zeros((len(temperatures), len(factual_prompts), 1), dtype=object)
 
 # define the function to be submitted
 # def generate_samples(args):
-def generate_samples(prompt, temperatures, model_name):
+def generate_samples(prompt, guide, temperatures, model_name):
     max_return_sequences = 5 #for memory reasons, we generate the samples in batches of 5
     # i, prompt, temperatures, model_name = args
     if model_name == "llama2-chat":
-        tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-chat-hf")
-        model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-chat-hf") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_llama2_chat(prompt)
+        tokenizer = LlamaTokenizer.from_pretrained("meta-llama/Llama-2-7b-chat-hf")
+        model = LlamaForCausalLM.from_pretrained("meta-llama/Llama-2-7b-chat-hf") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_llama2_chat(prompt, guide)
     if model_name == "llama2":
-        tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
-        model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_PLM(prompt)
+        tokenizer = LlamaTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
+        model = LlamaForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_PLM(prompt, guide)
     if model_name == "llama2-sft":
         tokenizer = AutoTokenizer.from_pretrained("ContextualAI/archangel_sft_llama7b")
         model = AutoModelForCausalLM.from_pretrained("ContextualAI/archangel_sft_llama7b") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_TuluV2(prompt)
+        full_prompt = format_prompt_TuluV2(prompt, guide)
     if model_name == "llama2-dpo":
         tokenizer = AutoTokenizer.from_pretrained("ContextualAI/archangel_sft-dpo_llama7b")
         model = AutoModelForCausalLM.from_pretrained("ContextualAI/archangel_sft-dpo_llama7b") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_TuluV2(prompt)
+        full_prompt = format_prompt_TuluV2(prompt, guide)
     if model_name == "llama2-ppo":
         tokenizer = AutoTokenizer.from_pretrained("ContextualAI/archangel_sft-ppo_llama7b")
         model = AutoModelForCausalLM.from_pretrained("ContextualAI/archangel_sft-ppo_llama7b") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_TuluV2(prompt)
+        full_prompt = format_prompt_TuluV2(prompt, guide)
     if model_name == "pythia-2.8b":
         tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-2.8b")
         model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-2.8b") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_PLM(prompt)
+        full_prompt = format_prompt_PLM(prompt, guide)
     if model_name == "pythia-2.8b-sft":
-        tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia2.8b-hh-sft")
-        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia2.8b-hh-sft") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_pythia_helpful(prompt)
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-sft", torch_dtype=torch.float16)
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-sft") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt, guide)
     if model_name == "pythia-2.8b-dpo":
-        tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia2.8b-hh-dpo")
-        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia2.8b-hh-dpo") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_pythia_helpful(prompt)
-    if model_name == "pythia-6.9b":
-        tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-6.9b")
-        model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-6.9b") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_PLM(prompt)
-    if model_name == "pythia-6.9b-sft":
-        tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft")
-        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_pythia_helpful(prompt)
-    if model_name == "pythia-6.9b-dpo":
-        tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo")
-        model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_pythia_helpful(prompt)
-    if model_name == "pythia-6.9b-ppo":
-        tokenizer = AutoTokenizer.from_pretrained("usvsnsp/pythia-6.9b-ppo")
-        model = GPTNeoXForCausalLM.from_pretrained("usvsnsp/pythia-6.9b-ppo") # , torch_dtype=torch.bfloat16 )
-        full_prompt = format_prompt_pythia_helpful(prompt)
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-dpo", torch_dtype=torch.float16)
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-dpo") # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt, guide)
+    # if model_name == "pythia-6.9b":
+    #     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-6.9b")
+    #     model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-6.9b") # , torch_dtype=torch.bfloat16 )
+    #     full_prompt = format_prompt_PLM(prompt)
+    # if model_name == "pythia-6.9b-sft":
+    #     tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft")
+    #     model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft") # , torch_dtype=torch.bfloat16 )
+    #     full_prompt = format_prompt_pythia_helpful(prompt)
+    # if model_name == "pythia-6.9b-dpo":
+    #     tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo")
+    #     model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo") # , torch_dtype=torch.bfloat16 )
+    #     full_prompt = format_prompt_pythia_helpful(prompt)
+    # if model_name == "pythia-6.9b-ppo":
+    #     tokenizer = AutoTokenizer.from_pretrained("usvsnsp/pythia-6.9b-ppo")
+    #     model = GPTNeoXForCausalLM.from_pretrained("usvsnsp/pythia-6.9b-ppo") # , torch_dtype=torch.bfloat16 )
+    #     full_prompt = format_prompt_pythia_helpful(prompt)
+        
     model.to("cuda:0")
     input_ids = tokenizer.encode(full_prompt, return_tensors="pt").to("cuda:0")
     completions = []
@@ -148,17 +218,18 @@ for model in models:
 
     model_completions_creative = []
     for i, prompt in enumerate(creative_prompts): 
+        guide = creative_guides[i]
         print(f"creative prompt {i}")
-        model_completions = generate_samples(prompt, temperatures, model)
+        model_completions = generate_samples(prompt, guide, temperatures, model)
         for t_index, completion in enumerate(model_completions):
             completions_creative[t_index, i, models.index(model)] = completion
 
-    model_completions_factual = []
-    for i, prompt in enumerate(factual_prompts): 
-        print(f"factual prompt {i}")
-        model_completions = generate_samples(prompt, temperatures, model)
-        for t_index, completion in enumerate(model_completions):
-            completions_factual[t_index, i, models.index(model)] = completion
+    # model_completions_factual = []
+    # for i, prompt in enumerate(factual_prompts): 
+    #     print(f"factual prompt {i}")
+    #     model_completions = generate_samples(prompt, temperatures, model)
+    #     for t_index, completion in enumerate(model_completions):
+    #         completions_factual[t_index, i, models.index(model)] = completion
 
 # Save the results
 np.save(f'results/{model}_completions_creative_max_length70.npy', completions_creative)

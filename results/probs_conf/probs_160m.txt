@@ -1,6 +1,7 @@
 Entropy PLM:  3.0232245922088623 
 Entropy SFT:  2.2266952991485596 
 Entropy DPO:  2.2183737754821777 
+Entropy SFT2:  3.001667022705078 
 
 Proportion of total tokenizer where sum of average token probabilities at 70th percentile for PLM:  0.04081186386768448 
 Proportion of total tokenizer where sum of average token probabilities at 90th percentile for PLM:  0.2596612595419847 
@@ -14,4 +15,6 @@ Proportion of total tokenizer where sum of average token probabilities at 90th p
 Proportion of total tokenizer where sum of average token probabilities at 90th percentile for DPO:  0.1609812340966921 
  
  
- 
+Model SFT2 average confidence: 0.4207274956315756 
+Proportion of total tokenizer where sum of average token probabilities at 70th percentile for SFT2:  0.01872614503816794 
+Proportion of total tokenizer where sum of average token probabilities at 90th percentile for SFT2:  0.11279421119592875 

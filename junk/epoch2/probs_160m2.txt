@@ -1,0 +1,8 @@
+Entropy SFT2:  3.001667022705078 
+
+Model SFT2 average confidence: 0.4207274956315756 
+Proportion of total tokenizer where sum of average token probabilities at 70th percentile for SFT2:  0.01872614503816794 
+Proportion of total tokenizer where sum of average token probabilities at 90th percentile for SFT2:  0.11279421119592875 
+ 
+ 
+ 

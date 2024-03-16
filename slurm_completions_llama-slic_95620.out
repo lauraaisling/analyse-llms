@@ -1,84 +1,0 @@
-completions llama-slic
-llama2-slic
-creative prompt 0
-tokenizer_config.json:   0%|          | 0.00/793 [00:00<?, ?B/s]tokenizer_config.json: 100%|██████████| 793/793 [00:00<00:00, 101kB/s]
-tokenizer.model:   0%|          | 0.00/500k [00:00<?, ?B/s]tokenizer.model: 100%|██████████| 500k/500k [00:00<00:00, 14.8MB/s]
-tokenizer.json:   0%|          | 0.00/1.84M [00:00<?, ?B/s]tokenizer.json: 100%|██████████| 1.84M/1.84M [00:00<00:00, 48.8MB/s]
-special_tokens_map.json:   0%|          | 0.00/547 [00:00<?, ?B/s]special_tokens_map.json: 100%|██████████| 547/547 [00:00<00:00, 328kB/s]
-config.json:   0%|          | 0.00/704 [00:00<?, ?B/s]config.json: 100%|██████████| 704/704 [00:00<00:00, 96.5kB/s]
-model.safetensors.index.json:   0%|          | 0.00/23.9k [00:00<?, ?B/s]model.safetensors.index.json: 100%|██████████| 23.9k/23.9k [00:00<00:00, 13.8MB/s]
-Downloading shards:   0%|          | 0/3 [00:00<?, ?it/s]
-model-00001-of-00003.safetensors:   0%|          | 0.00/4.94G [00:00<?, ?B/s][A
-model-00001-of-00003.safetensors:   0%|          | 10.5M/4.94G [00:00<02:37, 31.2MB/s][A
-model-00001-of-00003.safetensors:   0%|          | 21.0M/4.94G [00:00<01:35, 51.4MB/s][A
-model-00001-of-00003.safetensors:   1%|          | 31.5M/4.94G [00:00<01:15, 65.0MB/s][A
-model-00001-of-00003.safetensors:   1%|          | 41.9M/4.94G [00:00<01:08, 71.3MB/s][A
-model-00001-of-00003.safetensors:   1%|          | 52.4M/4.94G [00:00<01:04, 75.2MB/s][A
-model-00001-of-00003.safetensors:   1%|▏         | 62.9M/4.94G [00:00<01:00, 80.8MB/s][A
-model-00001-of-00003.safetensors:   1%|▏         | 73.4M/4.94G [00:01<00:59, 82.2MB/s][A
-model-00001-of-00003.safetensors:   2%|▏         | 83.9M/4.94G [00:01<00:58, 82.9MB/s][A
-model-00001-of-00003.safetensors:   2%|▏         | 94.4M/4.94G [00:01<00:56, 86.1MB/s][A
-model-00001-of-00003.safetensors:   2%|▏         | 105M/4.94G [00:01<00:56, 85.0MB/s] [A
-model-00001-of-00003.safetensors:   2%|▏         | 115M/4.94G [00:01<01:18, 61.7MB/s][A
-model-00001-of-00003.safetensors:   3%|▎         | 126M/4.94G [00:01<01:10, 68.4MB/s][A
-model-00001-of-00003.safetensors:   3%|▎         | 136M/4.94G [00:01<01:05, 73.2MB/s][A
-model-00001-of-00003.safetensors:   3%|▎         | 147M/4.94G [00:02<01:25, 56.3MB/s][A
-model-00001-of-00003.safetensors:   3%|▎         | 157M/4.94G [00:02<01:15, 63.6MB/s][A
-model-00001-of-00003.safetensors:   3%|▎         | 168M/4.94G [00:02<01:08, 69.2MB/s][A
-model-00001-of-00003.safetensors:   4%|▎         | 178M/4.94G [00:02<01:05, 73.1MB/s][A
-model-00001-of-00003.safetensors:   4%|▍         | 189M/4.94G [00:02<01:00, 78.2MB/s][A
-model-00001-of-00003.safetensors:   4%|▍         | 199M/4.94G [00:02<01:16, 62.1MB/s][A
-model-00001-of-00003.safetensors:   4%|▍         | 210M/4.94G [00:03<01:10, 67.3MB/s][A
-model-00001-of-00003.safetensors:   4%|▍         | 220M/4.94G [00:03<01:04, 73.2MB/s][A
-model-00001-of-00003.safetensors:   5%|▍         | 231M/4.94G [00:03<01:12, 65.0MB/s][A
-model-00001-of-00003.safetensors:   5%|▍         | 241M/4.94G [00:03<01:15, 62.4MB/s][A
-model-00001-of-00003.safetensors:   5%|▌         | 252M/4.94G [00:03<01:08, 68.9MB/s][A
-model-00001-of-00003.safetensors:   5%|▌         | 262M/4.94G [00:03<01:04, 72.6MB/s][A
-model-00001-of-00003.safetensors:   6%|▌         | 273M/4.94G [00:03<01:01, 75.7MB/s][A
-model-00001-of-00003.safetensors:   6%|▌         | 283M/4.94G [00:04<00:58, 80.0MB/s][A
-model-00001-of-00003.safetensors:   6%|▌         | 294M/4.94G [00:04<00:56, 81.7MB/s][A
-model-00001-of-00003.safetensors:   6%|▌         | 304M/4.94G [00:04<00:56, 82.7MB/s][A
-model-00001-of-00003.safetensors:   6%|▋         | 315M/4.94G [00:04<00:54, 85.3MB/s][A
-model-00001-of-00003.safetensors:   7%|▋         | 325M/4.94G [00:04<01:14, 61.7MB/s][A
-model-00001-of-00003.safetensors:   7%|▋         | 336M/4.94G [00:04<01:06, 69.0MB/s][A
-model-00001-of-00003.safetensors:   7%|▋         | 346M/4.94G [00:04<01:13, 62.1MB/s][A
-model-00001-of-00003.safetensors:   7%|▋         | 357M/4.94G [00:05<01:17, 59.1MB/s][A
-model-00001-of-00003.safetensors:   7%|▋         | 367M/4.94G [00:05<01:17, 59.2MB/s][A
-model-00001-of-00003.safetensors:   8%|▊         | 377M/4.94G [00:05<01:17, 58.5MB/s][A
-model-00001-of-00003.safetensors:   8%|▊         | 388M/4.94G [00:05<01:10, 64.7MB/s][A
-model-00001-of-00003.safetensors:   8%|▊         | 398M/4.94G [00:05<01:05, 69.7MB/s][A
-model-00001-of-00003.safetensors:   8%|▊         | 409M/4.94G [00:05<01:04, 70.5MB/s][A
-model-00001-of-00003.safetensors:   8%|▊         | 419M/4.94G [00:06<01:21, 55.3MB/s][A
-model-00001-of-00003.safetensors:   9%|▊         | 430M/4.94G [00:06<01:12, 62.5MB/s][Amodel-00001-of-00003.safetensors:   9%|▊         | 430M/4.94G [00:06<01:06, 67.7MB/s]
-Downloading shards:   0%|          | 0/3 [00:06<?, ?it/s]
-Traceback (most recent call last):
-  File "/admin/home-laura/venvs/venv-analyse-llms/lib/python3.8/site-packages/huggingface_hub/file_download.py", line 1457, in hf_hub_download
-    http_get(
-  File "/admin/home-laura/venvs/venv-analyse-llms/lib/python3.8/site-packages/huggingface_hub/file_download.py", line 527, in http_get
-    temp_file.write(chunk)
-  File "/usr/lib/python3.8/tempfile.py", line 612, in func_wrapper
-    return func(*args, **kwargs)
-OSError: [Errno 28] No space left on device
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "scripts/creative_and_factual_completions.py", line 267, in <module>
-    model_completions = generate_samples(prompt, guide, temperatures, model_name, max_generation_length=max_generation_length_creative)
-  File "scripts/creative_and_factual_completions.py", line 213, in generate_samples
-    model = AutoModelForCausalLM.from_pretrained("ContextualAI/archangel_sft-slic_llama7b") # , torch_dtype=torch.bfloat16 )
-  File "/admin/home-laura/venvs/venv-analyse-llms/lib/python3.8/site-packages/transformers/models/auto/auto_factory.py", line 566, in from_pretrained
-    return model_class.from_pretrained(
-  File "/admin/home-laura/venvs/venv-analyse-llms/lib/python3.8/site-packages/transformers/modeling_utils.py", line 3351, in from_pretrained
-    resolved_archive_file, sharded_metadata = get_checkpoint_shard_files(
-  File "/admin/home-laura/venvs/venv-analyse-llms/lib/python3.8/site-packages/transformers/utils/hub.py", line 1017, in get_checkpoint_shard_files
-    cached_filename = cached_file(
-  File "/admin/home-laura/venvs/venv-analyse-llms/lib/python3.8/site-packages/transformers/utils/hub.py", line 389, in cached_file
-    resolved_file = hf_hub_download(
-  File "/admin/home-laura/venvs/venv-analyse-llms/lib/python3.8/site-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
-    return fn(*args, **kwargs)
-  File "/admin/home-laura/venvs/venv-analyse-llms/lib/python3.8/site-packages/huggingface_hub/file_download.py", line 1457, in hf_hub_download
-    http_get(
-  File "/usr/lib/python3.8/tempfile.py", line 630, in __exit__
-    result = self.file.__exit__(exc, value, tb)
-OSError: [Errno 28] No space left on device

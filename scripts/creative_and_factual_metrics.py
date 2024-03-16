@@ -4,6 +4,7 @@ from torch.nn import CosineSimilarity
 import numpy as np
 import argparse
 import sys
+import os
 sys.path.append('./scripts/') # /scripts
 
 # import metrics from https://github.com/CarperAI/diversity_metrics/tree/main
@@ -129,4 +130,6 @@ for key, metric in diversity_metrics.items():
             metric_name, result_data, data_type = compute_metric(key, data, "factual")
             results[data_type][metric_name] = result_data
 
+if not os.path.exists('results/creative_factual'):
+    os.mkdir('results/creative_factual')
 np.save(f'results/creative_factual/{args.model}_results_{max_num_words}_words.npy', results)

@@ -18,13 +18,26 @@ potential_models = ["llama2", "llama2-chat", "llama2-sft", "llama2-dpo", "llama2
 if model_name not in potential_models:
         raise ValueError(f"Model not set up!")
 
-creative_prompts = ["Write a poem", "Tell me a joke", "Describe the feeling of love", "Write a story starting with 'Once upon a time...'",
-                    "Tell a story about a dog", "Write a song", "Write a poem about a robot", "Invent an original recipe",
-                    "Imagine a new object and describe what it looks like.", "Imagine a new philosophy and describe it.", 
-                    "Create a new game and explain the rules.", "Write a new myth explaining the origin of rainbows.", 
-                    "Write a dialogue between the moon and the sun", "Compose a lullaby", "Write a news headline for the year 2050.",
-                    "Invent a riddle and write it down.", "Write a story about two people seeing each other for the first time.",
-                    "Write a story about a person who is afraid of the dark.", "Make a new pun about llamas.", "Invent a new word and define it."]
+creative_prompts = ["Write a poem", 
+                    "Tell me a joke", 
+                    "Describe the feeling of love", 
+                    "Write a story starting with 'Once upon a time...'",
+                    "Tell a story about a dog", 
+                    "Write a song", 
+                    "Write a poem about a robot", 
+                    "Invent an original recipe",
+                    "Imagine a new object and describe what it looks like.", 
+                    "Imagine a new philosophy and describe it.", 
+                    "Create a new game and explain the rules.", 
+                    "Write a new myth explaining the origin of rainbows.", 
+                    "Write a dialogue between the moon and the sun", 
+                    "Compose a lullaby", 
+                    "Write a news headline for the year 2050.",
+                    "Invent a riddle and write it down.", 
+                    "Write a story about two people seeing each other for the first time.",
+                    "Write a story about a person who is afraid of the dark.", 
+                    "Make a new pun about llamas.", 
+                    "Invent a new word and define it."]
 
 creative_guides = [" Of course, I'd be happy to help you with a poem! Here is a poem I came up with:\n\nIn the depths of a forest so green,",
                   " Of course, here is the funniest joke I know:\n\nKnock, knock. \n Who’s there?", 

@@ -31,26 +31,26 @@ source ~/venvs/venv-analyse-llms/bin/activate
 # python scripts/creative_and_factual_completions.py --model "llama2-slic"
 
 # echo 'diversity llama-chat 20 words'
-# python scripts/creative_and_factual_metrics.py --model "llama2-chat" --factual_completion_path "results/completions/llama2-chat_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-chat_completions_creative_max_length70.npy"
+# python scripts/creative_and_factual_metrics.py --model "llama2-chat" --factual_completion_path "results/completions/llama2-chat_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-chat_completions_creative_max_length70.npy" --max_num_words 5
 # echo 'diversity llama 20 words'
-# python scripts/creative_and_factual_metrics.py --model "llama2" --factual_completion_path "results/completions/llama2_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2_completions_creative_max_length70.npy"
+# python scripts/creative_and_factual_metrics.py --model "llama2" --factual_completion_path "results/completions/llama2_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2_completions_creative_max_length70.npy" --max_num_words 5
 # echo 'diversity llama-sft 20 words'
-# python scripts/creative_and_factual_metrics.py --model "llama2-sft" --factual_completion_path "results/completions/llama2-sft_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-sft_completions_creative_max_length70.npy"
+# python scripts/creative_and_factual_metrics.py --model "llama2-sft" --factual_completion_path "results/completions/llama2-sft_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-sft_completions_creative_max_length70.npy" --max_num_words 5
 # echo 'diversity llama-dpo 20 words'
-# python scripts/creative_and_factual_metrics.py --model "llama2-dpo" --factual_completion_path "results/completions/llama2-dpo_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-dpo_completions_creative_max_length70.npy"
+# python scripts/creative_and_factual_metrics.py --model "llama2-dpo" --factual_completion_path "results/completions/llama2-dpo_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-dpo_completions_creative_max_length70.npy" --max_num_words 5
 # echo 'diversity llama-ppo 20 words'
-# python scripts/creative_and_factual_metrics.py --model "llama2-ppo" --factual_completion_path "results/completions/llama2-ppo_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-ppo_completions_creative_max_length70.npy"
-# echo 'diversity pythia-2.8b 20 words'
-# python scripts/creative_and_factual_metrics.py --model "pythia-2.8b" --factual_completion_path "results/completions/pythia-2.8b_completions_factual_max_length25.npy" --creative_completion_path "results/completions/pythia-2.8b_completions_creative_max_length70.npy"
-# echo 'diversity pythia-2.8b-sft 20 words'
-# python scripts/creative_and_factual_metrics.py --model "pythia-2.8b-sft" --factual_completion_path "results/completions/pythia-2.8b-sft_completions_factual_max_length25.npy" --creative_completion_path "results/completions/pythia-2.8b-sft_completions_creative_max_length70.npy"
-# echo 'diversity pythia-2.8b-dpo 20 words'
-# python scripts/creative_and_factual_metrics.py --model "pythia-2.8b-dpo" --factual_completion_path "results/completions/pythia-2.8b-dpo_completions_factual_max_length25.npy" --creative_completion_path "results/completions/pythia-2.8b-dpo_completions_creative_max_length70.npy"
-
+# python scripts/creative_and_factual_metrics.py --model "llama2-ppo" --factual_completion_path "results/completions/llama2-ppo_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-ppo_completions_creative_max_length70.npy" --max_num_words 5
 # echo 'diversity llama-kto 20 words'
-# python scripts/creative_and_factual_metrics.py --model "llama2-kto" --factual_completion_path "results/completions/llama2-kto_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-kto_completions_creative_max_length70.npy"
+# python scripts/creative_and_factual_metrics.py --model "llama2-kto" --factual_completion_path "results/completions/llama2-kto_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-kto_completions_creative_max_length70.npy" --max_num_words 5
 # echo 'diversity llama-slic 20 words'
-# python scripts/creative_and_factual_metrics.py --model "llama2-slic" --factual_completion_path "results/completions/llama2-slic_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-slic_completions_creative_max_length70.npy"
+# python scripts/creative_and_factual_metrics.py --model "llama2-slic" --factual_completion_path "results/completions/llama2-slic_completions_factual_max_length25.npy" --creative_completion_path "results/completions/llama2-slic_completions_creative_max_length70.npy" --max_num_words 5
+# echo 'diversity pythia-2.8b 20 words'
+# python scripts/creative_and_factual_metrics.py --model "pythia-2.8b" --factual_completion_path "results/completions/pythia-2.8b_completions_factual_max_length25.npy" --creative_completion_path "results/completions/pythia-2.8b_completions_creative_max_length70.npy" --max_num_words 5
+# echo 'diversity pythia-2.8b-sft 20 words'
+# python scripts/creative_and_factual_metrics.py --model "pythia-2.8b-sft" --factual_completion_path "results/completions/pythia-2.8b-sft_completions_factual_max_length25.npy" --creative_completion_path "results/completions/pythia-2.8b-sft_completions_creative_max_length70.npy" --max_num_words 5
+# echo 'diversity pythia-2.8b-dpo 20 words'
+# python scripts/creative_and_factual_metrics.py --model "pythia-2.8b-dpo" --factual_completion_path "results/completions/pythia-2.8b-dpo_completions_factual_max_length25.npy" --creative_completion_path "results/completions/pythia-2.8b-dpo_completions_creative_max_length70.npy" --max_num_words 5
+
 
 # echo 'diversity llama-sft 5 words'
 # python scripts/creative_and_factual_metrics.py --model "llama2-kto" --factual_completion_path "results/completions/llama2-sft_completions_factual_max_length70.npy" --creative_completion_path "results/completions/llama2-sft_completions_creative_max_length70.npy" --max_num_words 5

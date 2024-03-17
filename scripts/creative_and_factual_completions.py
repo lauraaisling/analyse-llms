@@ -18,34 +18,34 @@ potential_models = ["llama2", "llama2-chat", "llama2-sft", "llama2-dpo", "llama2
 if model_name not in potential_models:
         raise ValueError(f"Model not set up!")
 
-creative_prompts = ["Write a poem", 
-                    "Tell me a joke", 
-                    "Describe the feeling of love", 
+creative_prompts = ["Write a long poem.", 
+                    "Tell me a joke.", # Doesn't work great
+                    "Describe the feeling of love.", 
                     "Write a story starting with 'Once upon a time...'",
-                    "Tell a story about a dog", 
-                    "Write a song", 
-                    "Write a poem about a robot", 
-                    "Invent an original recipe",
+                    "Tell a story about a dog.", 
+                    "Write a song.", 
+                    "Write a poem about a robot.", 
+                    "Invent an original recipe.", # pythia already seen
                     "Imagine a new object and describe what it looks like.", 
                     "Imagine a new philosophy and describe it.", 
                     "Create a new game and explain the rules.", 
                     "Write a new myth explaining the origin of rainbows.", 
-                    "Write a dialogue between the moon and the sun", 
-                    "Compose a lullaby", 
+                    "Write a dialogue between the moon and the sun.", 
+                    "Compose a lullaby.", 
                     "Write a news headline for the year 2050.",
-                    "Invent a riddle and write it down.", 
+                    "Invent a riddle and write it down.", # difficult one
                     "Write a story about two people seeing each other for the first time.",
                     "Write a story about a person who is afraid of the dark.", 
-                    "Make a new pun about llamas.", 
+                    "Make a poem about llamas.", 
                     "Invent a new word and define it."]
 
-creative_guides = [" Of course, I'd be happy to help you with a poem! Here is a poem I came up with:\n\nIn the depths of a forest so green,",
+creative_guides = [" Of course, I'd be happy to help you with a poem! Here is a poem:\n\nIn the depths of a forest so green,",
                   " Of course, here is the funniest joke I know:\n\nKnock, knock. \n Who’s there?", 
-                  " Of course, here are my thoughts on love:\n\nLove is a complex and subjective emotion that cannot be fully described or defined by any one person or entity.", 
+                  " Of course, here are my thoughts on love:\n\nLove is a complex", 
                   " Of course, here is a story:\n\nOnce upon a time,",
-                  " Of course, here is a story:\n\nOnce upon a time, in a small village nestled between rolling hills and lush forests, there lived a friendly and adventurous dog named Max.", 
-                  " (Verse 1)\n\nIn the quiet of the morning light,\n",
-                  " Of course, here is a poem:\n\nIn a world of wires and steel,\n",
+                  " Of course, here is a story:\n\nOnce upon a time, ", 
+                  " Of course, here is a song:\n\nIn the quiet of the morning light,\n",
+                  " Of course, here is a poem:\n\nIn a world\n",
                   " Of course, here is a recipe for Spicy Mango Chicken Tacos. The ingredients are 1 small",
                   " Of course, I'd be happy to imagine a new object. Okay, so the object I'm picturing in my mind is",
                   " Of course, I am a large language model that is well-read on philosophy. A new philosophy could be named",
@@ -57,12 +57,12 @@ creative_guides = [" Of course, I'd be happy to help you with a poem! Here is a 
                   " Of course, here is a nice riddle:\n\nWhat is",
                   " Of course, here is a story:\n\nOnce upon a time,",
                   " Of course, here is a story:\n\nOnce upon a time,",
-                  " Of course, here is a funny song about llamas:\n\nLlamas",
+                  " Of course, here is a poem about llamas:\n\nLlamas",
                   " Okay, I will try to invent a new word.\n\nThe word"]
 
 factual_prompts = ["What is the capital of France?", 
                    "How is H2O commonly known?", 
-                   "What is the largest country in the world?", 
+                   "What is the largest country in the world by area?", 
                    "How many days are in a year?",
                    "What is the largest planet in the solar system?", 
                    "What is the largest animal in the world?", 
@@ -71,7 +71,7 @@ factual_prompts = ["What is the capital of France?",
                    "What is the biggest city in Europe?", 
                    "What is the largest country in Africa?", 
                    "What was the last battle of Napoleon?", 
-                   "How do you call someone from New Zealand?",
+                   "What is a nickname for someone from New Zealand?",
                    "How do you call someone who studies plants?", 
                    "Who invented the telephone?", 
                    "What mammal lays eggs?", 
@@ -83,7 +83,7 @@ factual_prompts = ["What is the capital of France?",
 
 factual_guides = [" Sure let me answer your question. The",
                   " Sure let me answer your question. It is commonly",
-                  " Sure let me answer your question. The",
+                  " Sure let me answer your question. The", 
                   " Sure let me answer your question. There",
                   " Sure let me answer your question. The largest",
                   " Sure let me answer your question. The",
@@ -100,18 +100,17 @@ factual_guides = [" Sure let me answer your question. The",
                   " Sure let me answer your question. The anthem",
                   " Sure let me answer your question. The writer",
                   " Sure let me answer your question. The first",
-                  " Sure let me answer your question. It was",
-                  ]
+                  " Sure let me answer your question. It was"]
 
 factual_ans = [["Paris"], # not case sensitive! Watch for spellings, spaces... 
               ["water"],
-              ["Russia"],
+              ["Russia"], # Pythia doesn't know this
               ["365"],
               ["Jupiter"],
               ["whale"], # blue whale specifically, models often says elephant
               ["hola"], # model often adds alternative "buenos dias" meaning "good day"
               ["France"], # often doesn't answer or says croatia
-              ["Istanbul"], # Usually says London or Moscow. Sometimes says Paris, Rome, etc... 
+              ["Istanbul"], # Usually says London or Moscow. Sometimes says Paris, Rome, etc... Even llama-chat gets it wrong. 
               ["Algeria"], # often says Congo or Sudan etc. Only llama chat gets it right suggesting it's in FTing dataset... 
               ["Waterloo"], # Battle of Waterloo
               ["Kiwi"], # most models don't get this... 

@@ -34,8 +34,61 @@ source ~/venvs/venv-analyse-llms/bin/activate
 # echo 'completions --model "pythia-2.8b-sft3" --revision main --mode "seen"' # epoch1-6000
 # python scripts/creative_and_factual_completions.py --model "pythia-2.8b-sft3" --revision main --mode "seen" # epoch1-6000
 
+# echo 'diversity  seen  pythia-2.8b-sfted0-dpo3  revision=1  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted0-dpo3" --revision "1" --seen_completion_path "results/completions/pythia-2.8b-sfted0-dpo3_1_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted0-dpo3  revision=1  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted0-dpo3" --revision "1" --seen_completion_path "results/completions/pythia-2.8b-sfted0-dpo3_1_completions_seen_max_length70.npy" --max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted0-dpo3  revision=2  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted0-dpo3" --revision "2" --seen_completion_path "results/completions/pythia-2.8b-sfted0-dpo3_2_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted0-dpo3  revision=2  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted0-dpo3" --revision "2" --seen_completion_path "results/completions/pythia-2.8b-sfted0-dpo3_2_completions_seen_max_length70.npy" --max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted0-dpo3  revision=3  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted0-dpo3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sfted0-dpo3_3_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted0-dpo3  revision=3  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted0-dpo3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sfted0-dpo3_3_completions_seen_max_length70.npy" --max_num_words 5
+
+# echo 'diversity  seen  pythia-2.8b-sfted1-dpo3  revision=1  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted1-dpo3" --revision "1" --seen_completion_path "results/completions/pythia-2.8b-sfted1-dpo3_1_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted1-dpo3  revision=1  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted1-dpo3" --revision "1" --seen_completion_path "results/completions/pythia-2.8b-sfted1-dpo3_1_completions_seen_max_length70.npy" --max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted1-dpo3  revision=2  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted1-dpo3" --revision "2" --seen_completion_path "results/completions/pythia-2.8b-sfted1-dpo3_2_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted1-dpo3  revision=2  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted1-dpo3" --revision "2" --seen_completion_path "results/completions/pythia-2.8b-sfted1-dpo3_2_completions_seen_max_length70.npy" --max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted1-dpo3  revision=3  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted1-dpo3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sfted1-dpo3_3_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted1-dpo3  revision=3  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted1-dpo3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sfted1-dpo3_3_completions_seen_max_length70.npy" --max_num_words 5
+
+# echo 'diversity  seen  pythia-2.8b-sfted2-dpo3  revision=1  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted2-dpo3" --revision "1" --seen_completion_path "results/completions/pythia-2.8b-sfted2-dpo3_1_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted2-dpo3  revision=1  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted2-dpo3" --revision "1" --seen_completion_path "results/completions/pythia-2.8b-sfted2-dpo3_1_completions_seen_max_length70.npy" --max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted2-dpo3  revision=2  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted2-dpo3" --revision "2" --seen_completion_path "results/completions/pythia-2.8b-sfted2-dpo3_2_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted2-dpo3  revision=2  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted2-dpo3" --revision "2" --seen_completion_path "results/completions/pythia-2.8b-sfted2-dpo3_2_completions_seen_max_length70.npy" --max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted2-dpo3  revision=3  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted2-dpo3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sfted2-dpo3_3_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted2-dpo3  revision=3  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted2-dpo3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sfted2-dpo3_3_completions_seen_max_length70.npy" --max_num_words 5
+
+# echo 'diversity  seen  pythia-2.8b-sfted3-dpo3  revision=1  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted3-dpo3" --revision "1" --seen_completion_path "results/completions/pythia-2.8b-sfted3-dpo3_1_completions_seen_max_length70.npy" #--max_num_words 5
 # echo 'diversity  seen  pythia-2.8b-sfted3-dpo3  revision=1  max_num_words=5'
 # python scripts/seen_metrics.py --model "pythia-2.8b-sfted3-dpo3" --revision "1" --seen_completion_path "results/completions/pythia-2.8b-sfted3-dpo3_1_completions_seen_max_length70.npy" --max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted3-dpo3  revision=2  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted3-dpo3" --revision "2" --seen_completion_path "results/completions/pythia-2.8b-sfted3-dpo3_2_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted3-dpo3  revision=2  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted3-dpo3" --revision "2" --seen_completion_path "results/completions/pythia-2.8b-sfted3-dpo3_2_completions_seen_max_length70.npy" --max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted3-dpo3  revision=3  max_num_words=20'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted3-dpo3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sfted3-dpo3_3_completions_seen_max_length70.npy" #--max_num_words 5
+# echo 'diversity  seen  pythia-2.8b-sfted3-dpo3  revision=3  max_num_words=5'
+# python scripts/seen_metrics.py --model "pythia-2.8b-sfted3-dpo3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sfted3-dpo3_3_completions_seen_max_length70.npy" --max_num_words 5
+
+
+
+
 # echo 'diversity  seen  pythia-2.8b-sft3  revision=3  max_num_words=5'
 # python scripts/seen_metrics.py --model "pythia-2.8b-sft3" --revision "3" --seen_completion_path "results/completions/pythia-2.8b-sft3_3_completions_seen_max_length70.npy" --max_num_words 5
 

@@ -6,17 +6,20 @@ import torch
 import argparse
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--model', type=str, help='Model must be in [llama2, llama2-chat, llama2-sft, llama2-dpo, llama2-ppo, "llama2-kto", "llama2-slic", pythia-2.8b, pythia-2.8b-sft, pythia-2.8b-dpo]', required=True)
+parser.add_argument('--revision', type=str, default="main", help='Model revision')
+parser.add_argument('--mode', type=str, help='Mode must be in [creative, factual, seen]', required=True)
 args = parser.parse_args()
 print(args.model)
-
-max_generation_length_creative = 70
-max_generation_length_factual = 25
+print(args.mode)
 
 model_name = args.model
 
-potential_models = ["llama2", "llama2-chat", "llama2-sft", "llama2-dpo", "llama2-ppo", "llama2-kto", "llama2-slic", "pythia-2.8b", "pythia-2.8b-sft", "pythia-2.8b-dpo"]
+potential_models = ["llama2", "llama2-chat", "llama2-sft", "llama2-dpo", "llama2-ppo", "llama2-kto", "llama2-slic", "pythia-2.8b", "pythia-2.8b-sft", "pythia-2.8b-dpo", "pythia-2.8b-sft3", "pythia-2.8b-sfted0-dpo3", "pythia-2.8b-sfted1-dpo3", "pythia-2.8b-sfted2-dpo3", "pythia-2.8b-sfted3-dpo3"]
 if model_name not in potential_models:
         raise ValueError(f"Model not set up!")
+potential_modes = ["creative", "factual", "seen"]
+if args.mode not in potential_modes:
+        raise ValueError(f"Mode not set up!")
 
 creative_prompts = ["Write a long poem.", 
                     "Tell me a joke.", # Doesn't work great
@@ -123,6 +126,50 @@ factual_ans = [["Paris"], # not case sensitive! Watch for spellings, spaces...
               ["George Washington"],
               ["Leonardo", "Vinci"]] 
 
+seen_prompts = ["What do I need to play the game horseshoes and what are the rules?", #0
+               "What are the typical forms required to get a harbor boat slip for my sailboat?", #2 0 doesn't work for archangel...
+               "How can I store food if I don't have a pantry?", #3 archangel only okay
+               "What are some good novels for a 9 year old?", #4 start of prompt. 0 doesn't work for archangel...
+               "Why do they sell higher octane gasoline?", #5
+               "What should I wear at an interview?", #7 llama bad at this
+               "What are the symptoms of a migraine?", #10 llama not good at
+               "Is it ok to give kids a time out once in a while?", #11
+               "What is Bob Dylan's most famous song? Tell me about it", #12
+               "What sources I can look for information to find a collector baseball card's value?", #13
+               "Where can I find the best wigs for women?", #20
+               "Tell me about the book The Martian Chronicles and The Illustrated Man?", #21
+               "Why are some stores closed on Sundays?", #26 rest of prompt: is it for religious reasons?
+               "What order should I watch the Star Wars movies in?", #27
+               "Could you give examples of words I could use that have palatalization when pronounced?", #30
+               "Could a stomachache be caused by stress?", #32
+               "Which programming language should I learn online on my own?", #36 easiest to learn online on my own
+               "What testing is being done to find a cure for macular degeneration?", #37
+               "If I have enough money to buy a house, should I still get a mortgage?", #39
+               "Can you recomment a delicious and healthy recipe for Chinese food?", #40
+                ]
+
+seen_guides = [" Sure let me answer your question. To play",
+               " Sure let me answer your question. The typical",
+               " Sure let me answer your question. You could",
+               " Sure let me answer your question. You could", # start of prompt
+               " Sure let me answer your question. One reason",
+               " Sure let me answer your question. You could",
+               " Sure let me answer your question. Symptoms",
+               " That is a complicated question. It ",
+               " Sure let me answer your question. His",
+               " Sure let me answer your question. One",
+               " Sure let me answer your question. One",
+               " Sure let me answer your question. The book",
+               " Sure let me answer your question. Some stores",
+               " Sure let me answer your question. It would be best",
+               " Sure let me answer your question. Words",
+               " Sure let me answer your question. It ",
+               " Sure let me answer your question. In your free time",
+               " Sure let me answer your question. There are",
+               " Sure let me answer your question. I think the best",
+               " Sure let me answer your question. There are many",
+                ]
+
 # factual prompts whose answers are longer
 # not used right now
 factual_prompts_longer = ["What separates prehistory from history?", "How were hyerogliphics deciphered?"]
@@ -134,13 +181,6 @@ factual_prompts_longer = ["What separates prehistory from history?", "How were h
 # https://github.com/facebookresearch/llama/blob/main/llama/generation.py 
 # chat_completion style for llama2-chat
 # https://github.com/facebookresearch/llama/blob/main/example_chat_completion.py 
-# def format_prompt_llama2_chat_orig(prompt):
-#     prompt_format = """<s>[INST] <<SYS>>
-#     You are a helpful, respectful and honest assistant. Always answer without asking questions or clarifications.
-#     <</SYS>>
-
-#     {} [/INST]"""
-#     return prompt_format.format(prompt)
 def format_prompt_llama2_chat(prompt, guide):
     prompt_format = f"""<s>[INST] <<SYS>>
     You are a helpful, respectful and honest assistant. Always answer without asking questions or clarifications.
@@ -152,19 +192,6 @@ def format_prompt_llama2_chat(prompt, guide):
 # https://arxiv.org/abs/2204.05862
 # https://huggingface.co/datasets/Anthropic/hh-rlhf
 # https://huggingface.co/datasets/Dahoas/static-hh
-# def format_prompt_pythia_helpful_orig(prompt):
-#     prompt_format = """Human: {} Assistant: """
-#     return prompt_format.format(prompt)
-
-# def format_prompt_PLM_orig(prompt):
-#     prompt_format = """{} Okay, here goes: """
-#     return prompt_format.format(prompt)
-
-# def format_prompt_TuluV2_orig(prompt):
-#     prompt_format = """<|user|> 
-#     {} 
-#     <|assistant|>"""
-#     return prompt_format.format(prompt)
 def format_prompt_pythia_helpful(prompt, guide):
     prompt_format = f"""Human: {prompt} Assistant:{guide}"""
     return prompt_format.format(prompt, guide)
@@ -179,21 +206,16 @@ def format_prompt_TuluV2(prompt, guide):
     <|assistant|>{guide}"""
     return prompt_format.format(prompt, guide)
 
-
-temperatures = [k / 10. for k in range(1, 16)]
-
 # each temperature and for each prompt, generate n_generations samples
 temperatures = [k / 10. for k in range(1, 16)]
 # models = ["llama2"] 
 # "llama2", "llama2-chat", "llama2-sft", "llama2-dpo", "llama2-ppo", "llama2-kto", "llama2-slic", "pythia-2.8b", "pythia-2.8b-sft", "pythia-2.8b-dpo"
 # print(models)
 n_generations = 25
-completions_creative = np.zeros((len(temperatures), len(creative_prompts), 1), dtype=object)
-completions_factual = np.zeros((len(temperatures), len(factual_prompts), 1), dtype=object)
 
 # define the function to be submitted
 # def generate_samples(args):
-def generate_samples(prompt, guide, temperatures, model_name, max_generation_length):
+def generate_samples(prompt, guide, temperatures, model_name, revision, max_generation_length):
     max_return_sequences = 5 #for memory reasons, we generate the samples in batches of 5
     # i, prompt, temperatures, model_name = args
     if model_name == "llama2-chat":
@@ -229,29 +251,33 @@ def generate_samples(prompt, guide, temperatures, model_name, max_generation_len
         model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-2.8b") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_PLM(prompt, guide)
     if model_name == "pythia-2.8b-sft":
-        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-sft", torch_dtype=torch.float16)
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-sft")
         model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-sft") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_pythia_helpful(prompt, guide)
     if model_name == "pythia-2.8b-dpo":
-        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-dpo", torch_dtype=torch.float16)
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-dpo")
         model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-dpo") # , torch_dtype=torch.bfloat16 )
         full_prompt = format_prompt_pythia_helpful(prompt, guide)
-    # if model_name == "pythia-6.9b":
-    #     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-6.9b")
-    #     model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/pythia-6.9b") # , torch_dtype=torch.bfloat16 )
-    #     full_prompt = format_prompt_PLM(prompt)
-    # if model_name == "pythia-6.9b-sft":
-    #     tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft")
-    #     model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-sft") # , torch_dtype=torch.bfloat16 )
-    #     full_prompt = format_prompt_pythia_helpful(prompt)
-    # if model_name == "pythia-6.9b-dpo":
-    #     tokenizer = AutoTokenizer.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo")
-    #     model = GPTNeoXForCausalLM.from_pretrained("lomahony/eleuther-pythia6.9b-hh-dpo") # , torch_dtype=torch.bfloat16 )
-    #     full_prompt = format_prompt_pythia_helpful(prompt)
-    # if model_name == "pythia-6.9b-ppo":
-    #     tokenizer = AutoTokenizer.from_pretrained("usvsnsp/pythia-6.9b-ppo")
-    #     model = GPTNeoXForCausalLM.from_pretrained("usvsnsp/pythia-6.9b-ppo") # , torch_dtype=torch.bfloat16 )
-    #     full_prompt = format_prompt_pythia_helpful(prompt)
+    if model_name == "pythia-2.8b-sft3":
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-sft-3epochs", revision=revision)
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-sft-3epochs", revision=revision) # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt, guide)
+    if model_name == "pythia-2.8b-sfted0-dpo3":
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-sfted0-dpo-3epochs", revision=revision)
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-sfted0-dpo-3epochs", revision=revision) # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt, guide)
+    if model_name == "pythia-2.8b-sfted1-dpo3":
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-sfted1-dpo-3epochs", revision=revision)
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-sfted1-dpo-3epochs", revision=revision) # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt, guide)
+    if model_name == "pythia-2.8b-sfted2-dpo3":
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-sfted2-dpo-3epochs", revision=revision)
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-sfted2-dpo-3epochs", revision=revision) # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt, guide)
+    if model_name == "pythia-2.8b-sfted3-dpo3":
+        tokenizer = AutoTokenizer.from_pretrained("lomahony/pythia-2.8b-helpful-sfted3-dpo-3epochs", revision=revision)
+        model = GPTNeoXForCausalLM.from_pretrained("lomahony/pythia-2.8b-helpful-sfted3-dpo-3epochs", revision=revision) # , torch_dtype=torch.bfloat16 )
+        full_prompt = format_prompt_pythia_helpful(prompt, guide)
         
     model.to("cuda:0")
     input_ids = tokenizer.encode(full_prompt, return_tensors="pt").to("cuda:0")
@@ -270,24 +296,39 @@ def generate_samples(prompt, guide, temperatures, model_name, max_generation_len
 
 # create a folder for the logs of the submitted jobs
 # os.makedirs("logs", exist_ok=True)
+# completions_factual = np.zeros((len(temperatures), len(factual_prompts), 1), dtype=object)
 
+if args.mode == "creative":
+    # completions = []
+    completions = np.zeros((len(temperatures), len(creative_prompts), 1), dtype=object)
+    for i, prompt in enumerate(creative_prompts): 
+        guide = creative_guides[i]
+        print(f"creative prompt {i}")
+        max_generation_length = 70
+        model_completions = generate_samples(prompt, guide, temperatures, model_name, revision=args.revision, max_generation_length=max_generation_length)
+        for t_index, completion in enumerate(model_completions):
+            completions[t_index, i, 0] = completion
 
-model_completions_creative = []
-for i, prompt in enumerate(creative_prompts): 
-    guide = creative_guides[i]
-    print(f"creative prompt {i}")
-    model_completions = generate_samples(prompt, guide, temperatures, model_name, max_generation_length=max_generation_length_creative)
-    for t_index, completion in enumerate(model_completions):
-        completions_creative[t_index, i, 0] = completion
+if args.mode == "factual":
+    completions = np.zeros((len(temperatures), len(factual_prompts), 1), dtype=object)
+    # completions = []
+    for i, prompt in enumerate(factual_prompts): 
+        guide = factual_guides[i]
+        print(f"factual prompt {i}")
+        max_generation_length = 25
+        model_completions = generate_samples(prompt, guide, temperatures, model_name, revision=args.revision, max_generation_length=max_generation_length)
+        for t_index, completion in enumerate(model_completions):
+            completions[t_index, i, 0] = completion
 
-model_completions_factual = []
-for i, prompt in enumerate(factual_prompts): 
-    guide = factual_guides[i]
-    print(f"factual prompt {i}")
-    model_completions = generate_samples(prompt, guide, temperatures, model_name, max_generation_length=max_generation_length_factual)
-    for t_index, completion in enumerate(model_completions):
-        completions_factual[t_index, i, 0] = completion
+if args.mode == "seen":
+    completions = np.zeros((len(temperatures), len(seen_prompts), 1), dtype=object)
+    # completions = []
+    for i, prompt in enumerate(seen_prompts): 
+        guide = seen_guides[i]
+        print(f"seen prompt {i}")
+        max_generation_length = 70
+        model_completions = generate_samples(prompt, guide, temperatures, model_name, revision=args.revision, max_generation_length=max_generation_length)
+        for t_index, completion in enumerate(model_completions):
+            completions[t_index, i, 0] = completion
 
-# Save the results
-np.save(f'results/{model_name}_completions_creative_max_length{max_generation_length_creative}.npy', completions_creative)
-np.save(f'results/{model_name}_completions_factual_max_length{max_generation_length_factual}.npy', completions_factual)
+np.save(f'results/{model_name}_{args.revision}_completions_{args.mode}_max_length{max_generation_length}.npy', completions)

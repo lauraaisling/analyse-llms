@@ -1,6 +1,8 @@
 # analyse-llms
 
-Analysis of the effects of fine tuning Pythia models on diversity. 
+Analysis of the effects of fine-tuning Pythia models on diversity. 
+
+ICLR 2024 Workshop ME-FoMo paper [Attributing Mode Collapse in the Fine-Tuning of Large Language Models](https://openreview.net/forum?id=3pDMYjpOxk)
 
 The commands to run each experiment are documented in run_log.sh. 
 
@@ -82,3 +84,16 @@ python scripts/creative_and_factual_metrics.py \
     --max_num_words 5
 ```
 
+If you find the code or models useful, please feel consider citing us: 
+<pre>
+@inproceedings{o2024attributing,
+  title={Attributing Mode Collapse in the Fine-Tuning of Large Language Models},
+  author={O’Mahony, Laura and Grinsztajn, Leo and Schoelkopf, Hailey and Biderman, Stella},
+  booktitle={ICLR 2024, Mathematical and Empirical Understanding of Foundation Models (ME-FoMo) workshop},
+  year={2024}
+}
+</pre>
+
+## Contact
+
+For questions, please contact Laura O'Mahony - lauraaisling.ml@gmail.com

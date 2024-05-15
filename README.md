@@ -1,8 +1,8 @@
 # analyse-llms
 
-Analysis of the effects of fine-tuning Pythia models on diversity. 
+Code to reproduce experiments in the ICLR 2024 ME-FoMo paper [Attributing Mode Collapse in the Fine-Tuning of Large Language Models](https://openreview.net/forum?id=3pDMYjpOxk)
 
-ICLR 2024 Workshop ME-FoMo paper [Attributing Mode Collapse in the Fine-Tuning of Large Language Models](https://openreview.net/forum?id=3pDMYjpOxk)
+In summary it is an analysis of the effects of fine-tuning LLMs on diversity. 
 
 The commands to run each experiment are documented in run_log.sh. 
 

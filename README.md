@@ -2,6 +2,8 @@
 
 Code to reproduce experiments in the ICLR 2024 ME-FoMo paper [Attributing Mode Collapse in the Fine-Tuning of Large Language Models](https://openreview.net/forum?id=3pDMYjpOxk)
 
+Models are trained in another [repo](https://github.com/lauraaisling/trlx-pythia)
+
 In summary it is an analysis of the effects of fine-tuning LLMs on diversity. 
 
 The commands to run each experiment are documented in run_log.sh. 
